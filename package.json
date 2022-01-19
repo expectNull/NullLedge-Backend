@@ -1,0 +1,22 @@
+{
+  "name": "nullledge-backend",
+  "version": "1.0.0",
+  "description": "NullLedge-Backend",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NullLedge/NullLedge-Backend.git"
+  },
+  "author": "exceptNull",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NullLedge/NullLedge-Backend/issues"
+  },
+  "homepage": "https://github.com/NullLedge/NullLedge-Backend#readme",
+  "dependencies": {
+    "express": "^4.17.2"
+  }
+}
