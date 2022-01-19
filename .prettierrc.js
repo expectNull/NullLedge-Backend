@@ -1,6 +1,6 @@
 // .prettierrc.js
 module.exports = {
-  singleQuote: true,
+  // singleQuote: true,
   // 문자열은 홑따옴표로 formatting
   semi: true,
   //코드 마지막에 세미콜른이 있게 formatting
