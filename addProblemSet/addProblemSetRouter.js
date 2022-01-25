@@ -52,22 +52,27 @@ async function addTags(page) {
   return ret;
 }
 
-router.get("/", async (req, res) => {
-  const response = req.body;
-  console.log(response);
-  var sql =
-    "INSERT INTO PROBLEM_SET_TB(PROBLEM_ID, TAGS_NM, HASH_ID) VALUES(?,?,?)"; // ON DUPLICATE KEY UPDATE (TAGS_NM, HASH_ID) = (?,?)";
-  // commitlog 테이블에서 구직자의 이름, 추천자의 이름, 이력 내용이 맞는 것을 찾아서 삭제한다.
-  let i = 1;
-  var problemSet = await addTags(1);
-  while (problemSet.length != 0) {
-    problemSet = await addTags(i++);
+async function getProblem() {
+  let problemSet = await addTags(page);
+
+  if (problemSet.length == 0) {
+    clearInterval(problemSet);
+  }
+
+  router.get("/", async (req, res) => {
+    const response = req.body;
+    console.log(response);
+    var sql =
+      "INSERT INTO PROBLEM_SET_TB(PROBLEM_ID, TAGS_NM, HASH_ID) VALUES(?,?,?)"; // ON DUPLICATE KEY UPDATE (TAGS_NM, HASH_ID) = (?,?)";
+    // commitlog 테이블에서 구직자의 이름, 추천자의 이름, 이력 내용이 맞는 것을 찾아서 삭제한다.
+
     getConnection(con => {
       for (let i = 0; i < problemSet.length; i++) {
         var params = [
+          problemSet[i]["titleKo"],
           problemSet[i]["problemId"],
           problemSet[i]["tags"],
-          problemSet[i]["problemId"],
+          problemSet[i]["problemId"] * 1000,
           // problemSet[i]["tags"],
           // problemSet[i]["problemId"],
         ];
@@ -83,9 +88,19 @@ router.get("/", async (req, res) => {
       // 쿼리문 수행.
       con.release();
     });
-  }
 
-  res.end();
-});
+    res.end();
+  });
+
+  page++;
+}
+
+var page = 244;
+
+var dayProblem = setInterval(() => {
+  var updateProblem = setInterval(async () => {
+    await getProblem();
+  }, 1000);
+}, 86400000);
 
 module.exports = router;
