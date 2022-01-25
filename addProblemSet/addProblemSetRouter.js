@@ -95,12 +95,9 @@ async function getProblem() {
   page++;
 }
 
-var page = 244;
-
-var dayProblem = setInterval(() => {
-  var updateProblem = setInterval(async () => {
-    await getProblem();
-  }, 1000);
-}, 86400000);
+var page = 1;
+var updateProblem = setInterval(async () => {
+  await getProblem();
+}, 1000);
 
 module.exports = router;
