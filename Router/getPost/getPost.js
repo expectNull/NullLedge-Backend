@@ -8,9 +8,9 @@ var sql =
 let ret = [];
 
 getConnection(con => {
-  con.query(sql, function (err, rows, fields) {
+  con.query(sql, async function (err, rows, fields) {
     if (err) {
-      //console.log(err);
+      console.log(err);
     }
     rows.forEach(item => {
       let temp_type = item.TYPE_GB;
@@ -19,8 +19,8 @@ getConnection(con => {
       post_id = item.POST_ID;
       ret.push({
         post_id: post_id,
-        ans_cnt: getAnswer(post_id).json(),
-        like_cnt: getLike(post_id).json(),
+        ans_cnt: getAnswer(post_id),
+        like_cnt: getLike(post_id),
         view_cnt: item.VIEW_CNT,
         post_nm: item.POST_NM,
         post_ymd: item.POST_YMD,
