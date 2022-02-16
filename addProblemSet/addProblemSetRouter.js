@@ -46,11 +46,18 @@ async function addTags(page) {
   // ret[i]["titleKo"] => 문제의 이름
   // ret[i]["tags"] => 문제 태그 JSON(태그가 없을 수도 있음.)
   ret.forEach(item => {
-    console.log(item["tags"]);
+    console.log(item["problemId"] + item["tags"]);
   });
 
   return ret;
 }
+
+router.get("/", async (req, res) => {
+  const response = req.body;
+  console.log(response);
+
+  res.end();
+});
 
 async function getProblem() {
   let problemSet = await addTags(page);
@@ -58,40 +65,30 @@ async function getProblem() {
   if (problemSet.length == 0) {
     clearInterval(problemSet);
   }
+  var sql =
+    "INSERT INTO PROBLEM_SET_TB(TITLE_NM, TAGS_NM, HASH_ID) VALUES(?,?,?)"; // ON DUPLICATE KEY UPDATE (TAGS_NM, HASH_ID) = (?,?)";
+  // commitlog 테이블에서 구직자의 이름, 추천자의 이름, 이력 내용이 맞는 것을 찾아서 삭제한다.
+  getConnection(con => {
+    for (let i = 0; i < problemSet.length; i++) {
+      var params = [
+        problemSet[i]["titleKo"],
+        problemSet[i]["tags"],
+        problemSet[i]["problemId"] * 1000,
+        // problemSet[i]["tags"],
+        // problemSet[i]["problemId"],
+      ];
 
-  router.get("/", async (req, res) => {
-    const response = req.body;
-    console.log(response);
-    var sql =
-      "INSERT INTO PROBLEM_SET_TB(PROBLEM_ID, TAGS_NM, HASH_ID) VALUES(?,?,?)"; // ON DUPLICATE KEY UPDATE (TAGS_NM, HASH_ID) = (?,?)";
-    // commitlog 테이블에서 구직자의 이름, 추천자의 이름, 이력 내용이 맞는 것을 찾아서 삭제한다.
-
-    getConnection(con => {
-      for (let i = 0; i < problemSet.length; i++) {
-        var params = [
-          problemSet[i]["titleKo"],
-          problemSet[i]["problemId"],
-          problemSet[i]["tags"],
-          problemSet[i]["problemId"] * 1000,
-          // problemSet[i]["tags"],
-          // problemSet[i]["problemId"],
-        ];
-
-        con.query(sql, params, function (err, rows, fields) {
-          if (err) {
-            console.log(err);
-          } else {
-            console.log(`added ${params}`);
-          }
-        });
-      }
-      // 쿼리문 수행.
-      con.release();
-    });
-
-    res.end();
+      con.query(sql, params, function (err, rows, fields) {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log(`added ${params}`);
+        }
+      });
+    }
+    // 쿼리문 수행.
+    con.release();
   });
-
   page++;
 }
 
