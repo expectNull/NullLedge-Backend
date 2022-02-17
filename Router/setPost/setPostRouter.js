@@ -24,7 +24,8 @@ router.post("/", async (req, res) => {
       info.html_content,
     ];
 
-    await connection.query(sql, param);
+    console.log(await connection.query(sql, param));
+
     connection.release();
   } catch (e) {
     console.log(e);

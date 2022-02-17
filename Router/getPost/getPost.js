@@ -5,7 +5,16 @@ const getLike = require("./getLikes");
 async function getItem(item) {
   let post_id = item.POST_ID;
 
-  let ret = JSON.stringify({
+  // let ret = JSON.stringify({
+  //   post_id: post_id,
+  //   ans_cnt: await getAnswer(post_id),
+  //   like_cnt: await getLike(post_id),
+  //   view_cnt: item.VIEW_CNT,
+  //   post_nm: item.POST_NM,
+  //   post_ymd: item.POST_YMD,
+  //   user_nm: item.USER_NICK_NM,
+  // });
+  let ret = {
     post_id: post_id,
     ans_cnt: await getAnswer(post_id),
     like_cnt: await getLike(post_id),
@@ -13,7 +22,7 @@ async function getItem(item) {
     post_nm: item.POST_NM,
     post_ymd: item.POST_YMD,
     user_nm: item.USER_NICK_NM,
-  });
+  };
   return ret;
 }
 
@@ -60,8 +69,10 @@ async function getPost() {
   return ret;
 }
 
-const temp = async () => {
-  console.log(await getPost());
-};
+// const temp = async () => {
+//   console.log(await getPost());
+// };
 
-temp();
+// temp();
+
+module.exports = getPost;
