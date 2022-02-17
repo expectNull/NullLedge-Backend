@@ -1,37 +1,44 @@
-const getConnection = require("../../database/database");
+const pool = require("../../database/database");
 const getAnswer = require("./getAnswers");
 const getLike = require("./getLikes");
 
-// function getPost() {
-var sql =
-  "select POST_ID, TYPE_GB, POST_NM, POST_YMD, VIEW_CNT, USER_NICK_NM from POST_TB join USER_TB on POST_TB.USER_ID = USER_TB.USER_ID;";
-let ret = [];
+async function getItem(item) {
+  let post_id = item.POST_ID;
 
-getConnection(con => {
-  con.query(sql, async function (err, rows, fields) {
-    if (err) {
-      console.log(err);
-    }
-    rows.forEach(item => {
-      let temp_type = item.TYPE_GB;
-      if (temp_type !== 0) return;
-
-      post_id = item.POST_ID;
-      ret.push({
-        post_id: post_id,
-        ans_cnt: getAnswer(post_id),
-        like_cnt: getLike(post_id),
-        view_cnt: item.VIEW_CNT,
-        post_nm: item.POST_NM,
-        post_ymd: item.POST_YMD,
-        user_nm: item.USER_NICK_NM,
-      });
-    });
-    console.log(ret);
+  let ret = JSON.stringify({
+    post_id: post_id,
+    ans_cnt: await getAnswer(post_id),
+    like_cnt: await getLike(post_id),
+    view_cnt: item.VIEW_CNT,
+    post_nm: item.POST_NM,
+    post_ymd: item.POST_YMD,
+    user_nm: item.USER_NICK_NM,
   });
-  con.release();
-});
-// return ret;
-// }
+  return ret;
+}
 
-// console.log(getPost());
+async function getPost() {
+  // type_gb = 0으로 질문글 확인, order by를 통해 최신글 부터
+  var sql = `select POST_ID, POST_NM, POST_YMD, VIEW_CNT, USER_NICK_NM 
+    from POST_TB join USER_TB on POST_TB.USER_ID = USER_TB.USER_ID 
+    where type_gb = 0
+    order by POST_YMD DESC;`;
+  let ret = [];
+
+  let connection = await pool.getConnection(async conn => conn);
+  let [rows, col] = await connection.query(sql);
+
+  for (let i = 0; i < rows.length; i++) {
+    ret.push(await getItem(rows[i]));
+  }
+
+  connection.release();
+
+  return ret;
+}
+
+const temp = async () => {
+  console.log(await getPost());
+};
+
+temp();

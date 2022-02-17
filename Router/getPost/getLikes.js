@@ -1,19 +1,14 @@
-const getConnection = require("../../database/database");
+const pool = require("../../database/database");
 
-function getLike(id) {
+async function getLike(id) {
   var sql = `select count(*) as cnt from LIKE_LOG_TB where POST_ID = ${id};`;
   let ret = 0;
 
-  getConnection(con => {
-    con.query(sql, function (err, rows, fields) {
-      if (err) {
-        console.log(err);
-      }
+  let connection = await pool.getConnection(async conn => conn);
+  let [rows, col] = await connection.query(sql);
 
-      ret += rows.cnt;
-    });
-    con.release();
-  });
+  ret += Number(rows[0].cnt);
+  connection.release();
 
   return ret;
 }
