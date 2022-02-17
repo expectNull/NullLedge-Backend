@@ -1,43 +1,35 @@
 var express = require("express");
 var router = express.Router();
-const getConnection = require("../../database/database");
+const pool = require("../../database/database");
 //라우터 초기설정
 
 router.post("/", async (req, res) => {
   try {
     const info = req.body;
-    var sql =
-      "INSERT INTO POST_TB(PROBLEM_ID, USER_ID, TYPE_GB, POST_NM, POST_YMD, POST_TAGS_NM, CONTENT, VIEW_CNT)\
-      VALUES(?,?,?,?,?,?,?, 0)";
+    let connection = await pool.getConnection(async conn => conn);
+    var sql = `INSERT INTO POST_TB(PROBLEM_ID, USER_ID, TYPE_GB, POST_NM, 
+        POST_YMD, POST_TAGS_NM, CONTENT, VIEW_CNT)
+      VALUES(?, ?, ?, ?,
+        ?, ?, ?, 0);`;
 
-    // sql 명령어이다. ?에 param 배열의 값들이 하나씩 들어간다.
+    // date는 new Date().toISOString().split(".")[0]로 나타내면 timezone을 분리해서 가져올 수 있다.
+    // mySQL 내에서는 영국을 기준으로 시간이 정해져 있어서 이거 수정해야 할듯.
     var param = [
       info.problem_id,
       info.user_id,
       info.type_gb,
       info.title,
-      "1999-11-05T22:01:12",
+      new Date().toISOString().split(".")[0],
       info.tags,
       info.html_content,
     ];
-    // sql 명령어에 필요한 요소들이다.
-    // console.log(sendReq);
-    await getConnection(con => {
-      con.query(sql, param, function (err, rows, fields) {
-        if (err) {
-          console.log(err);
-        } else {
-          //쿼리문 성공하면 할 코드 작성
-        }
-      });
-      con.release();
-      //Connection Pool에 con을 release해줘야한다.
-      res.end();
-      //res.end()를 하지 않으면, post작업을 한 번 더 실행하는 nodejs의 특성때문에 반드시 필요한 명령어이다.
-    });
+
+    await connection.query(sql, param);
+    connection.release();
   } catch (e) {
     console.log(e);
   }
+
   return;
 });
 
