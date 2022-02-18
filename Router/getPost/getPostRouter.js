@@ -6,7 +6,9 @@ const getPost = require("./getPost");
 router.post("/", async (req, res) => {
   try {
     const ret = await getPost();
-    console.log(ret);
+    const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+    console.log(ip);
+
     res.json(ret);
     res.end();
   } catch (e) {
