@@ -8,7 +8,7 @@ router.post("/", async (req, res) => {
     const ret = await getPost();
     console.log(ret);
     res.json(ret);
-    // res.end();
+    res.end();
   } catch (e) {
     console.log(e);
   }
