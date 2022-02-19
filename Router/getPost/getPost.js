@@ -11,7 +11,10 @@ async function getItem(item) {
     like_cnt: await getLike(post_id),
     view_cnt: item.VIEW_CNT,
     post_nm: item.POST_NM,
-    post_ymd: item.POST_YMD,
+    post_ymd: JSON.stringify(item.POST_YMD)
+      .replace("T", " ")
+      .replace('"', "")
+      .split(".")[0],
     user_nm: item.USER_NICK_NM,
     content: item.CONTENT,
   };
