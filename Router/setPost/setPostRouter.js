@@ -1,12 +1,9 @@
 var express = require("express");
 var router = express.Router();
 const pool = require("../../database/database");
-var moment = require("moment");
-require("moment-timezone");
-moment.tz.setDefault("Asia/Seoul");
 //라우터 초기설정
 
-https: router.post("/", async (req, res) => {
+router.post("/", async (req, res) => {
   try {
     const info = req.body;
     let connection = await pool.getConnection(async conn => conn);

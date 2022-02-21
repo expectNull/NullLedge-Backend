@@ -1,17 +1,13 @@
 const pool = require("../../database/database");
 const getLike = require("../getPost/getLikes");
+const timeConvert = require("../timeConverter");
 
 async function getItem(item, id) {
   let post_id = item.POST_ID;
-  let KST_Time = item.POST_YMD;
-  KST_Time.setHours(KST_Time.getHours() + 9);
 
   let ret = {
     post_nm: item.POST_NM,
-    post_ymd: JSON.stringify(KST_Time)
-      .replace("T", " ")
-      .replace('"', "")
-      .split(".")[0],
+    post_ymd: timeConvert(item.POST_YMD),
     post_tags: item.POST_TAGS_NM,
     content: item.CONTENT,
     view_cnt: item.VIEW_CNT,
