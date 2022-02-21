@@ -8,7 +8,11 @@ router.post("/", async (req, res) => {
     const ret = await getPost(post_id);
 
     const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+    let today = new Date();
+    console.log("------getHeadRouter---start--");
     console.log(ip);
+    console.log(today);
+    console.log("------getHeadRouter--end--");
 
     res.json(ret);
     res.end();

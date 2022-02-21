@@ -6,8 +6,11 @@ router.post("/", async (req, res) => {
   try {
     const ret = await getPost();
     const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+    let today = new Date();
+    console.log("------getPostRouter---start--");
     console.log(ip);
-
+    console.log(today);
+    console.log("------getPostRouter--end--");
     res.json(ret);
     res.end();
   } catch (e) {

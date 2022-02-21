@@ -24,7 +24,12 @@ router.post("/", async (req, res) => {
       info.html_content,
     ];
 
+    let today = new Date();
+    console.log("------setPostRouter---start--");
+    console.log(ip);
+    console.log(today);
     console.log(await connection.query(sql, param));
+    console.log("------setPostRouter--end--");
 
     connection.release();
   } catch (e) {
