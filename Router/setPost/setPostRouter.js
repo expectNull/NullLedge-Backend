@@ -1,9 +1,12 @@
 var express = require("express");
 var router = express.Router();
 const pool = require("../../database/database");
+var moment = require("moment");
+require("moment-timezone");
+moment.tz.setDefault("Asia/Seoul");
 //라우터 초기설정
 
-router.post("/", async (req, res) => {
+https: router.post("/", async (req, res) => {
   try {
     const info = req.body;
     let connection = await pool.getConnection(async conn => conn);
@@ -14,6 +17,7 @@ router.post("/", async (req, res) => {
 
     // date는 new Date().toISOString().split(".")[0]로 나타내면 timezone을 분리해서 가져올 수 있다.
     // mySQL 내에서는 영국을 기준으로 시간이 정해져 있어서 이거 수정해야 할듯.
+
     var param = [
       info.problem_id,
       info.user_id,
@@ -26,13 +30,15 @@ router.post("/", async (req, res) => {
 
     let today = new Date();
     console.log("------setPostRouter---start--");
-    console.log(ip);
     console.log(today);
     console.log(await connection.query(sql, param));
     console.log("------setPostRouter--end--");
+    console.log(moment().format("YYYY-MM-DD HH:mm:ss"));
 
+    res.end();
     connection.release();
   } catch (e) {
+    res.send(e);
     console.log(e);
   }
 

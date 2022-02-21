@@ -2,9 +2,13 @@ const pool = require("../../database/database");
 const getLike = require("../getPost/getLikes");
 
 async function getItem(item, id) {
+  let post_id = item.POST_ID;
+  let KST_Time = item.POST_YMD;
+  KST_Time.setHours(KST_Time.getHours() + 9);
+
   let ret = {
     post_nm: item.POST_NM,
-    post_ymd: JSON.stringify(item.POST_YMD)
+    post_ymd: JSON.stringify(KST_Time)
       .replace("T", " ")
       .replace('"', "")
       .split(".")[0],
