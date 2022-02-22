@@ -11,20 +11,25 @@ router.post("/", async (req, res) => {
     console.log(info);
 
     // 이미 Like Log가 존재하는 지 확인.
-    if (await checkLike(info.post_id, info.user_id)) return;
+    if (await checkLike(info.post_id, info.user_id)) {
+      console.log("-----LikeLog---------exist---\n");
+      res.end();
+      return;
+    }
 
     let connection = await pool.getConnection(async conn => conn);
     connection.release();
 
     // 새로운 Like Log 만들기.
     initLike(info.post_id, info.user_id);
-
-    console.log("------setLikeInit--end--\n");
   } catch (e) {
     console.log(e);
-  }
+  } finally {
+    res.end();
 
-  return;
+    console.log("------setLikeInit--end--\n");
+    return;
+  }
 });
 
 module.exports = router;

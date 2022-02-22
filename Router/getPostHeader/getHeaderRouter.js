@@ -4,23 +4,21 @@ const getPost = require("./getPost");
 
 router.post("/", async (req, res) => {
   try {
+    const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+    console.log("------getHeadRouter---start--");
+    console.log(ip);
+
     let post_id = req.query.id;
     const ret = await getPost(post_id);
 
-    const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
-    let today = new Date();
-    console.log("------getHeadRouter---start--");
-    console.log(ip);
-    console.log(today);
-    console.log("------getHeadRouter--end--");
-
     res.json(ret);
-    res.end();
   } catch (e) {
     console.log(e);
+  } finally {
+    res.end();
+    console.log("------getHeadRouter--end--\n");
+    return;
   }
-
-  return;
 });
 
 module.exports = router;
