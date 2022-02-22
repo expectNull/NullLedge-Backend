@@ -2,7 +2,7 @@ const pool = require("../../database/database");
 
 async function checkLike(post, user) {
   var sql = `select * 
-  from like_log_tb 
+  from LIKE_LOG_TB 
   where user_id = ${user} and post_id = ${post};`;
   let ret = [];
 

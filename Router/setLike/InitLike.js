@@ -1,7 +1,7 @@
 const pool = require("../../database/database");
 
 async function initLike(post, user) {
-  var sql = `insert into like_log_tb 
+  var sql = `insert into LIKE_LOG_TB 
   (USER_ID, POST_ID) 
   values (${user}, ${post});`;
 
