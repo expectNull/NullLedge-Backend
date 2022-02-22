@@ -13,7 +13,6 @@ router.post("/", async (req, res) => {
     console.log(e);
   } finally {
     res.end();
-
     console.log("------checkLike--end--\n");
     return;
   }

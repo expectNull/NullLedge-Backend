@@ -1,9 +1,9 @@
 const pool = require("../../database/database");
 
 async function checkLike(post, user) {
-  var sql = `select sum(VALUE_AMT) as CNT 
+  var sql = `select count(*) as CNT 
   from LIKE_LOG_TB 
-  where post_id = ${post};`;
+  where post_id = ${post} and VALUE_AMT = 1;`;
 
   let connection = await pool.getConnection(async conn => conn);
   let [rows, col] = await connection.query(sql);
