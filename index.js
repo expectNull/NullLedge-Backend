@@ -6,18 +6,24 @@ const cors = require("cors");
 const setPostRouter = require("./Router/setPost/setPostRouter");
 const setLikeRouter = require("./Router/setLike/setLikeRouter");
 const setLikeInitRouter = require("./Router/setLike/setLikeInitRouter");
-const getPostRouter = require("./Router/getPost/getPostRouter");
-const getHeaderRouter = require("./Router/getPostHeader/getHeaderRouter");
+const getLandingPostRouter = require("./Router/getLandingPost/getLandingPostRouter");
+const getAskRouter = require("./Router/getAsk/getAskRouter");
 const getLikeRouter = require("./Router/getLike/getLikeRouter");
+const getCommentItemRouter = require("./Router/getCommentItem/getCommentItemRouter");
+const getCommentListRouter = require("./Router/getCommentList/getCommentListRouter");
+const getReplysRouter = require("./Router/getReplys/getReplysRouter");
 const checkLikeRouter = require("./Router/checkLike/checkLikeRouter");
 
 app.use(cors());
 app.use(bodyParser.json());
 
 app.use("/checkLike", checkLikeRouter);
-app.use("/getPostead", getHeaderRouter);
-app.use("/getpost", getPostRouter);
+app.use("/getAsk", getAskRouter);
+app.use("/getCommentItem", getCommentItemRouter);
+app.use("/getCommentList", getCommentListRouter);
+app.use("/getLandingPost", getLandingPostRouter);
 app.use("/getLike", getLikeRouter);
+app.use("/getReplys", getReplysRouter);
 app.use("/setpost", setPostRouter);
 app.use("/setLike", setLikeRouter);
 app.use("/setLikeInit", setLikeInitRouter);
