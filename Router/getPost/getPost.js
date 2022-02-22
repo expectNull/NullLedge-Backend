@@ -1,6 +1,6 @@
 const pool = require("../../database/database");
 const getAnswer = require("./getAnswers");
-const getLike = require("./getLikes");
+const getLike = require("../getLike/getLike");
 const timeConvert = require("../timeConverter");
 
 async function getItem(item) {

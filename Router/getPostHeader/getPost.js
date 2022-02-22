@@ -1,5 +1,5 @@
 const pool = require("../../database/database");
-const getLike = require("../getPost/getLikes");
+const getLike = require("../getLike/getLike");
 const timeConvert = require("../timeConverter");
 
 async function getItem(item, id) {
