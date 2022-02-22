@@ -1,6 +1,6 @@
 var express = require("express");
 var router = express.Router();
-const getPost = require("./getPost");
+const getLandingPost = require("./getLandingPost");
 
 router.post("/", async (req, res) => {
   try {
@@ -8,7 +8,7 @@ router.post("/", async (req, res) => {
     console.log("------getPostRouter---start--");
     console.log(ip);
 
-    const ret = await getPost();
+    const ret = await getLandingPost();
     res.json(ret);
   } catch (e) {
     console.log(e);
