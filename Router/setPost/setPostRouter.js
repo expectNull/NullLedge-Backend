@@ -9,6 +9,7 @@ router.post("/", async (req, res) => {
     const info = req.body;
 
     let connection = await pool.getConnection(async conn => conn);
+    info.html_content = info.html_content.replace(/"/gi, '\\"');
     var sql = `INSERT INTO POST_TB(PROBLEM_ID, USER_ID, TYPE_GB, POST_NM, 
         POST_YMD, POST_TAGS_NM, CONTENT, VIEW_CNT)
       VALUES(${info.problem_id}, ${info.user_id}, ${info.type_gb}, "${
