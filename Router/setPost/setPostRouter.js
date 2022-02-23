@@ -11,12 +11,12 @@ router.post("/", async (req, res) => {
     let connection = await pool.getConnection(async conn => conn);
     var sql = `INSERT INTO POST_TB(PROBLEM_ID, USER_ID, TYPE_GB, POST_NM, 
         POST_YMD, POST_TAGS_NM, CONTENT, VIEW_CNT)
-      VALUES(${info.problem_id}, ${info.user_id}, ${info.type_gb}, ${
+      VALUES(${info.problem_id}, ${info.user_id}, ${info.type_gb}, "${
       info.title
-    },
-      ${new Date().toISOString().split(".")[0]}, ${info.tags}, ${
+    }",
+      "${new Date().toISOString().split(".")[0]}", "${info.tags}", "${
       info.html_content
-    }, 0);`;
+    }", 0);`;
     console.log(await connection.query(sql));
     connection.release();
   } catch (e) {
