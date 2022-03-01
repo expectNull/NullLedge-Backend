@@ -6,7 +6,6 @@ async function getItem(item, id) {
   let ret = {
     post_nm: item.POST_NM,
     post_ymd: timeConvert(item.POST_YMD),
-    post_tags: item.POST_TAGS_NM,
     content: item.CONTENT,
     view_cnt: item.VIEW_CNT,
     like_cnt: await getLike(id),
@@ -19,13 +18,13 @@ async function getItem(item, id) {
 }
 
 async function getAsk(id) {
-  var sql = `select POST_NM, POST_YMD, POST_TAGS_NM, CONTENT, 
+  var sql = `select POST_NM, POST_YMD, CONTENT, 
   VIEW_CNT, USER_NICK_NM, NULLPOINT_AMT, STATUS_CONTENT
   from POST_TB join USER_TB on POST_TB.USER_ID = USER_TB.USER_ID
-   where post_ID = ${id};`;
-
+   where post_ID = ?;`;
+  let params = id;
   let connection = await pool.getConnection(async conn => conn);
-  let [rows, col] = await connection.query(sql);
+  let [rows, col] = await connection.query(sql, params);
 
   connection.release();
 
