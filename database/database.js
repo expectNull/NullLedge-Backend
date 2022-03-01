@@ -5,13 +5,13 @@ const mysql = require("mysql2/promise");
 var pool = mysql.createPool(config);
 
 // mysql의 connection을 담을 pool을 생성
-async function getConnection(callback) {
-  await pool.getConnection(function (err, conn) {
-    if (!err) {
-      callback(conn);
-    }
-  });
-}
+// async function getConnection(callback) {
+//   await pool.getConnection(function (err, conn) {
+//     if (!err) {
+//       callback(conn);
+//     }
+//   });
+// }
 
 // getConnection함수는 connection이 되어있는 것을 mysql pool에 저장한 후,
 
