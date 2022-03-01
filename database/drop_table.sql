@@ -1,4 +1,4 @@
-use nullledge;
+use NULLLEDGE;
 drop TABLE `NULLLEDGE`.`LIKE_LOG_TB`;
 drop TABLE `NULLLEDGE`.`FILE_TB`;
 drop TABLE `NULLLEDGE`.`TAG_TB`;
