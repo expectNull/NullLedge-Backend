@@ -4,11 +4,12 @@ const timeConvert = require("../timeConverter");
 async function getCommentList(id) {
   var sql = `select POST_ID
   from POST_TB join USER_TB on POST_TB.USER_ID = USER_TB.USER_ID
-  where parent_post_id = ${id} and type_gb = 2;`;
+  where parent_post_id = ? and type_gb = 2;`;
+  let params = id;
   let ret = [];
 
   let connection = await pool.getConnection(async conn => conn);
-  let [rows, col] = await connection.query(sql);
+  let [rows, col] = await connection.query(sql, params);
 
   for (let i = 0; i < rows.length; i++) {
     ret.push(rows[i].POST_ID);
