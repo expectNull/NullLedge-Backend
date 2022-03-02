@@ -16,12 +16,13 @@ async function getReplys(parent_id) {
   var sql = `
   select POST_ID, CONTENT, USER_NICK_NM, NULLPOINT_AMT, STATUS_CONTENT
   from POST_TB join USER_TB on POST_TB.USER_ID = USER_TB.USER_ID
-  where type_gb = 1 and parent_post_id = ${parent_id}
+  where type_gb = 1 and parent_post_id = ?
   ORDER BY POST_YMD DESC;`;
+  let params = parent_id;
   let ret = [];
 
   let connection = await pool.getConnection(async conn => conn);
-  let [rows, col] = await connection.query(sql);
+  let [rows, col] = await connection.query(sql, params);
 
   for (let i = 0; i < rows.length; i++) {
     ret.push(await getItem(rows[i]));

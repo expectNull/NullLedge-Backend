@@ -14,10 +14,11 @@ async function getItem(item) {
 async function getCommentItem(id) {
   var sql = `select POST_YMD, CONTENT, USER_NICK_NM
   from POST_TB join USER_TB on POST_TB.USER_ID = USER_TB.USER_ID
-  where post_id = ${id};`;
+  where post_id = ?;`;
+  let params = id;
 
   let connection = await pool.getConnection(async conn => conn);
-  let [rows, col] = await connection.query(sql);
+  let [rows, col] = await connection.query(sql, params);
 
   connection.release();
 
