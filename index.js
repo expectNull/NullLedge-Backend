@@ -1,8 +1,25 @@
 const app = require("express")();
 const bodyParser = require("body-parser");
 
-const port = 8080;
+const https = require("https");
+const fs = require("fs");
+// const options = {
+//   ca: fs.readFileSync(
+//     "/etc/letsencrypt/live/www.whyrano.site/fullchain.pem",
+//     "utf-8",
+//   ),
+//   key: fs
+//     .readFileSync("/etc/letsencrypt/live/www.whyrano.site/privkey.pem", "utf-8")
+//     .toString(),
+//   cert: fs
+//     .readFileSync("/etc/letsencrypt/live/www.whyrano.site/cert.pem", "utf-8")
+//     .toString(),
+// };
+
+const port = 5000;
 const cors = require("cors");
+
+const indexRouter = require("./Router/indexRouter");
 
 const checkLikeRouter = require("./Router/checkLike/checkLikeRouter");
 
@@ -20,9 +37,11 @@ const setLikeRouter = require("./Router/setLike/setLikeRouter");
 const setLikeInitRouter = require("./Router/setLike/setLikeInitRouter");
 const setReplyRouter = require("./Router/setReply/setReplyRouter");
 const setCommentRouter = require("./Router/setComment/setCommentRouter");
+// const router = require("./Router/checkLike/checkLikeRouter");
 
 app.use(cors());
 app.use(bodyParser.json());
+app.use(indexRouter);
 
 app.use("/checkLike", checkLikeRouter);
 
@@ -41,6 +60,23 @@ app.use("/setLike", setLikeRouter);
 app.use("/setLikeInit", setLikeInitRouter);
 app.use("/setComment", setCommentRouter);
 
-app.listen(port, () => {
+app.listen(port, "0.0.0.0", () => {
   console.log(`Listening at http://localhost:${port}`);
 });
+
+// https.createServer(options, app).listen(port, "0.0.0.0", () => {
+//   console.log(`Listening at http://localhost:${port}`);
+// });
+
+// let options = {
+//   key: fs.readFileSync("./localhost.key"),
+//   cert: fs.readFileSync("./localhost.crt"),
+//   requestCert: false,
+//   rejectUnauthorized: false,
+// };
+
+// let server = https.createServer(options, app);
+
+// server.listen(port, "0.0.0.0", function () {
+//   console.log("Express server listening on port " + server.address().port);
+// });

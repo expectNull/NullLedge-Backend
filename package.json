@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon index.js"
+    "start": "nodemon index.js",
+    "setup:https": "openssl genrsa -out ./cert/localhost.key 2048 && openssl req -new -x509 -key ./cert/localhost.key -out ./cert/localhost.crt -days 3650 -subj /CN=localhost"
   },
   "repository": {
     "type": "git",
