@@ -3,20 +3,21 @@ const bodyParser = require("body-parser");
 
 const https = require("https");
 const fs = require("fs");
-// const options = {
-//   ca: fs.readFileSync(
-//     "/etc/letsencrypt/live/www.whyrano.site/fullchain.pem",
-//     "utf-8",
-//   ),
-//   key: fs
-//     .readFileSync("/etc/letsencrypt/live/www.whyrano.site/privkey.pem", "utf-8")
-//     .toString(),
-//   cert: fs
-//     .readFileSync("/etc/letsencrypt/live/www.whyrano.site/cert.pem", "utf-8")
-//     .toString(),
-// };
+const options = {
+  ca: fs.readFileSync(
+    "/etc/letsencrypt/live/whyrano.site/fullchain.pem",
+    "utf-8",
+  ),
+  key: fs.readFileSync(
+    "/etc/letsencrypt/live/whyrano.site/privkey.pem",
+    "utf-8",
+  ),
+  cert: fs.readFileSync("/etc/letsencrypt/live/whyrano.site/cert.pem", "utf-8"),
+};
 
-const port = 5000;
+let server = https.createServer(options, app);
+
+const port = 8080;
 const cors = require("cors");
 
 const indexRouter = require("./Router/indexRouter");
@@ -37,7 +38,6 @@ const setLikeRouter = require("./Router/setLike/setLikeRouter");
 const setLikeInitRouter = require("./Router/setLike/setLikeInitRouter");
 const setReplyRouter = require("./Router/setReply/setReplyRouter");
 const setCommentRouter = require("./Router/setComment/setCommentRouter");
-// const router = require("./Router/checkLike/checkLikeRouter");
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -60,23 +60,11 @@ app.use("/setLike", setLikeRouter);
 app.use("/setLikeInit", setLikeInitRouter);
 app.use("/setComment", setCommentRouter);
 
-app.listen(port, "0.0.0.0", () => {
-  console.log(`Listening at http://localhost:${port}`);
-});
-
-// https.createServer(options, app).listen(port, "0.0.0.0", () => {
+// app.listen(port, () => {
 //   console.log(`Listening at http://localhost:${port}`);
 // });
+//http 통신
 
-// let options = {
-//   key: fs.readFileSync("./localhost.key"),
-//   cert: fs.readFileSync("./localhost.crt"),
-//   requestCert: false,
-//   rejectUnauthorized: false,
-// };
-
-// let server = https.createServer(options, app);
-
-// server.listen(port, "0.0.0.0", function () {
-//   console.log("Express server listening on port " + server.address().port);
-// });
+server.listen(port, function () {
+  console.log("Express server listening on port " + server.address().port);
+});
