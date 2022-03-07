@@ -5,7 +5,7 @@ const existUser = require("./existUser");
 
 router.post("/", async (req, res) => {
   try {
-    console.log("------setRegister---start--");
+    console.log("------getLogin---start--");
     const info = req.body;
 
     // 동일한 email에 대해서 salt, hashedPw 가져오기.
@@ -22,7 +22,7 @@ router.post("/", async (req, res) => {
       return;
     }
 
-    let email = ret[0].GMAIL_NM;
+    let salt_mail = ret[0].SALT_MAIL_NM;
     let salt = ret[0].SALT_NM;
     let hashed = ret[0].PASS_NM;
 
@@ -35,7 +35,7 @@ router.post("/", async (req, res) => {
       // 단위는 ms입니다. ( 1일 == 60 * 60 * 24 초 )
       // 웹 서버에서만 접근할 수 있도록 쿠키에 플래그를 지정하는 httpOnly 옵션을 추가했습니다.
       // 이것도 bcrypt로 암호화 해서 쿠키로 만들까???
-      res.cookie("user", email, {
+      res.cookie("_KEN", salt_mail, {
         expires: new Date(Date.now() + 900000),
         httpOnly: true,
         encode: String,
@@ -51,7 +51,7 @@ router.post("/", async (req, res) => {
     console.log(e);
   } finally {
     res.end();
-    console.log("------setRegister--end--\n");
+    console.log("------getLogin--end--\n");
     return;
   }
 });

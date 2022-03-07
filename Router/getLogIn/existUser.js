@@ -1,7 +1,7 @@
 const pool = require("../../database/database");
 
 async function existUser(email) {
-  var sql = `select GMAIL_NM, SALT_NM, PASS_NM
+  var sql = `select SALT_MAIL_NM, SALT_NM, PASS_NM
   from USER_TB 
   where GMAIL_NM = ?;`;
   let params = email;
