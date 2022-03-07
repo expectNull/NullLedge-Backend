@@ -19,6 +19,7 @@ let server = https.createServer(options, app);
 
 const port = 8080;
 const cors = require("cors");
+const cookieParser = require("cookie-parser");
 
 const indexRouter = require("./Router/indexRouter");
 
@@ -32,14 +33,27 @@ const getCommentListRouter = require("./Router/getCommentList/getCommentListRout
 const getReplysRouter = require("./Router/getReplys/getReplysRouter");
 const getPostTagRouter = require("./Router/getPostTag/getPostTagRouter");
 const getTagPageRouter = require("./Router/getTagPage/getTagPageRouter");
+const getLoginRouter = require("./Router/getLogIn/getLoginRegister");
 
+const setRegisterRouter = require("./Router/setRegister/setRegisterRouter");
 const setPostRouter = require("./Router/setPost/setPostRouter");
 const setLikeRouter = require("./Router/setLike/setLikeRouter");
 const setLikeInitRouter = require("./Router/setLike/setLikeInitRouter");
 const setReplyRouter = require("./Router/setReply/setReplyRouter");
 const setCommentRouter = require("./Router/setComment/setCommentRouter");
 
-app.use(cors());
+// middleware 순서 이슈??
+// https://stackoverflow.com/questions/16209145/how-can-i-set-cookie-in-node-js-using-express-framework
+app.use(cookieParser());
+
+// https://kosaf04pyh.tistory.com/152
+// origin 설정 필요한가봄.
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+  }),
+);
 app.use(bodyParser.json());
 app.use(indexRouter);
 
@@ -53,7 +67,9 @@ app.use("/getLike", getLikeRouter);
 app.use("/getReplys", getReplysRouter);
 app.use("/getPostTag", getPostTagRouter);
 app.use("/getTagPage", getTagPageRouter);
+app.use("/getLogin", getLoginRouter);
 
+app.use("/setRegister", setRegisterRouter);
 app.use("/setReply", setReplyRouter);
 app.use("/setpost", setPostRouter);
 app.use("/setLike", setLikeRouter);
