@@ -1,23 +1,7 @@
 const app = require("express")();
 const bodyParser = require("body-parser");
 
-const https = require("https");
-const fs = require("fs");
-const options = {
-  ca: fs.readFileSync(
-    "/etc/letsencrypt/live/whyrano.site/fullchain.pem",
-    "utf-8",
-  ),
-  key: fs.readFileSync(
-    "/etc/letsencrypt/live/whyrano.site/privkey.pem",
-    "utf-8",
-  ),
-  cert: fs.readFileSync("/etc/letsencrypt/live/whyrano.site/cert.pem", "utf-8"),
-};
-
-let server = https.createServer(options, app);
-
-const port = 8080;
+const port = 5050;
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 
@@ -50,10 +34,12 @@ app.use(cookieParser());
 // origin 설정 필요한가봄.
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    // origin: "https://whyrano.site",
+    origin: ["https://localhost:3000", "https://whyrano.site"],
     credentials: true,
   }),
 );
+// app.use(cors);
 app.use(bodyParser.json());
 app.use(indexRouter);
 
@@ -76,11 +62,6 @@ app.use("/setLike", setLikeRouter);
 app.use("/setLikeInit", setLikeInitRouter);
 app.use("/setComment", setCommentRouter);
 
-// app.listen(port, () => {
-//   console.log(`Listening at http://localhost:${port}`);
-// });
-//http 통신
-
-server.listen(port, function () {
-  console.log("Express server listening on port " + server.address().port);
+app.listen(port, () => {
+  console.log(`Listening at http://localhost:${port}`);
 });

@@ -17,7 +17,7 @@ router.post("/", async (req, res) => {
       return;
     }
 
-    // 이미 Like Log가 존재하는 지 확인.
+    // 이미 이름이 존재하는 지 확인.
     if (await checkNm(info.nm)) {
       console.log("-----sameNm---------exist---\n");
       res.json({ error: "닉네임" });
