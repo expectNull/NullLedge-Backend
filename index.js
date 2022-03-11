@@ -8,6 +8,7 @@ const cookieParser = require("cookie-parser");
 const indexRouter = require("./Router/indexRouter");
 
 const checkLikeRouter = require("./Router/checkLike/checkLikeRouter");
+const checkCookieRouter = require("./Router/checkCookie/checkCookieRouter");
 
 const getLandingPostRouter = require("./Router/getLandingPost/getLandingPostRouter");
 const getAskRouter = require("./Router/getAsk/getAskRouter");
@@ -25,6 +26,8 @@ const setLikeRouter = require("./Router/setLike/setLikeRouter");
 const setLikeInitRouter = require("./Router/setLike/setLikeInitRouter");
 const setReplyRouter = require("./Router/setReply/setReplyRouter");
 const setCommentRouter = require("./Router/setComment/setCommentRouter");
+
+const removeCookieRouter = require("./Router/removeCookie/removeCookieRouter");
 
 // middleware 순서 이슈??
 // https://stackoverflow.com/questions/16209145/how-can-i-set-cookie-in-node-js-using-express-framework
@@ -44,6 +47,7 @@ app.use(bodyParser.json());
 app.use(indexRouter);
 
 app.use("/checkLike", checkLikeRouter);
+app.use("/checkCookie", checkCookieRouter);
 
 app.use("/getAsk", getAskRouter);
 app.use("/getCommentItem", getCommentItemRouter);
@@ -61,6 +65,8 @@ app.use("/setpost", setPostRouter);
 app.use("/setLike", setLikeRouter);
 app.use("/setLikeInit", setLikeInitRouter);
 app.use("/setComment", setCommentRouter);
+
+app.use("/removeCookie", removeCookieRouter);
 
 app.listen(port, () => {
   console.log(`Listening at http://localhost:${port}`);
