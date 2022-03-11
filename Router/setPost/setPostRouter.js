@@ -3,11 +3,14 @@ var router = express.Router();
 const setPost = require("./setPost");
 const setTag = require("./setTag");
 const getPostId = require("./getPostId");
+const getUserId = require("../getUserId");
 
 router.post("/", async (req, res) => {
   try {
     console.log("------setPostRouter---start--");
     const info = req.body;
+    // token == salt_mail로 ID 가져오기.
+    info.user_id = await getUserId(info.user_token);
 
     await setPost(info);
     let post = await getPostId(info.user_id);
