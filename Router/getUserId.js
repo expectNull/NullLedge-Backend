@@ -1,4 +1,4 @@
-const pool = require("../../database/database");
+const pool = require("../database/database");
 
 async function getUserId(token) {
   var sql = `select USER_ID
