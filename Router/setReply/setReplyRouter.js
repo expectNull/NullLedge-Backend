@@ -6,6 +6,7 @@ router.post("/", async (req, res) => {
   try {
     console.log("------setReply---start--");
     const info = req.body;
+    info.user_token = req.cookies["_KEN"];
     console.log(info);
 
     res.send(await setReply(info));

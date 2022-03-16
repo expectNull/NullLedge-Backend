@@ -10,6 +10,8 @@ router.post("/", async (req, res) => {
     console.log("------setPostRouter---start--");
     const info = req.body;
     // token == salt_mail로 ID 가져오기.
+    info.user_token = req.cookies["_KEN"];
+    console.log(info);
     info.user_id = await getUserId(info.user_token);
 
     await setPost(info);

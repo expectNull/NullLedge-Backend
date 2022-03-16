@@ -1,7 +1,6 @@
 const app = require("express")();
 const bodyParser = require("body-parser");
 
-const port = 5050;
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 
@@ -19,6 +18,8 @@ const getReplysRouter = require("./Router/getReplys/getReplysRouter");
 const getPostTagRouter = require("./Router/getPostTag/getPostTagRouter");
 const getTagPageRouter = require("./Router/getTagPage/getTagPageRouter");
 const getLoginRouter = require("./Router/getLogIn/getLoginRegister");
+const getUserInfoRouter = require("./Router/getUserInfo/getUserInfoRouter");
+const getUserPostRouter = require("./Router/getUserPost/getUserPostRouter");
 
 const setRegisterRouter = require("./Router/setRegister/setRegisterRouter");
 const setPostRouter = require("./Router/setPost/setPostRouter");
@@ -58,6 +59,8 @@ app.use("/getReplys", getReplysRouter);
 app.use("/getPostTag", getPostTagRouter);
 app.use("/getTagPage", getTagPageRouter);
 app.use("/getLogin", getLoginRouter);
+app.use("/getUser", getUserInfoRouter);
+app.use("/getUserPost", getUserPostRouter);
 
 app.use("/setRegister", setRegisterRouter);
 app.use("/setReply", setReplyRouter);
