@@ -29,6 +29,7 @@ const setReplyRouter = require("./Router/setReply/setReplyRouter");
 const setCommentRouter = require("./Router/setComment/setCommentRouter");
 
 const removeCookieRouter = require("./Router/removeCookie/removeCookieRouter");
+const removePostRouter = require("./Router/removePost/removePostRouter");
 
 // middleware 순서 이슈??
 // https://stackoverflow.com/questions/16209145/how-can-i-set-cookie-in-node-js-using-express-framework
@@ -70,6 +71,7 @@ app.use("/setLikeInit", setLikeInitRouter);
 app.use("/setComment", setCommentRouter);
 
 app.use("/removeCookie", removeCookieRouter);
+app.use("/removePost", removePostRouter);
 
 app.listen(port, () => {
   console.log(`Listening at http://localhost:${port}`);
