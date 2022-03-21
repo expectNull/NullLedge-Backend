@@ -40,7 +40,11 @@ app.use(cookieParser());
 app.use(
   cors({
     // origin: "https://whyrano.site",
-    origin: ["https://localhost:3000", "https://whyrano.site"],
+    origin: [
+      "https://localhost:3000",
+      "https://whyrano.site",
+      "https://tadfafsaest.whyrano.site",
+    ],
     credentials: true,
   }),
 );
@@ -73,6 +77,7 @@ app.use("/setComment", setCommentRouter);
 app.use("/removeCookie", removeCookieRouter);
 app.use("/removePost", removePostRouter);
 
+const port = 5050;
 app.listen(port, () => {
   console.log(`Listening at http://localhost:${port}`);
 });
