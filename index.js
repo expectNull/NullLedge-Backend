@@ -6,6 +6,8 @@ const cookieParser = require("cookie-parser");
 
 const indexRouter = require("./Router/indexRouter");
 
+const updateNoticeRouter = require("./Router/updateNotice/updateNoticeRouter");
+
 const checkLikeRouter = require("./Router/checkLike/checkLikeRouter");
 const checkCookieRouter = require("./Router/checkCookie/checkCookieRouter");
 
@@ -20,6 +22,7 @@ const getTagPageRouter = require("./Router/getTagPage/getTagPageRouter");
 const getLoginRouter = require("./Router/getLogIn/getLoginRegister");
 const getUserInfoRouter = require("./Router/getUserInfo/getUserInfoRouter");
 const getUserPostRouter = require("./Router/getUserPost/getUserPostRouter");
+const getNoticeRouter = require("./Router/getNotice/getNoticeRouter");
 
 const setRegisterRouter = require("./Router/setRegister/setRegisterRouter");
 const setPostRouter = require("./Router/setPost/setPostRouter");
@@ -52,6 +55,8 @@ app.use(
 app.use(bodyParser.json());
 app.use(indexRouter);
 
+app.use("/updateNotice", updateNoticeRouter);
+
 app.use("/checkLike", checkLikeRouter);
 app.use("/checkCookie", checkCookieRouter);
 
@@ -66,6 +71,7 @@ app.use("/getTagPage", getTagPageRouter);
 app.use("/getLogin", getLoginRouter);
 app.use("/getUser", getUserInfoRouter);
 app.use("/getUserPost", getUserPostRouter);
+app.use("/getNotice", getNoticeRouter);
 
 app.use("/setRegister", setRegisterRouter);
 app.use("/setReply", setReplyRouter);
