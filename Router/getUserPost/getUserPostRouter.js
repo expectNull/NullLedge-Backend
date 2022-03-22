@@ -1,6 +1,7 @@
 var express = require("express");
 var router = express.Router();
 const getUserPost = require("./getUserPost");
+const getParentPost = require("./getParentPost");
 
 router.post("/", async (req, res) => {
   try {
@@ -8,7 +9,11 @@ router.post("/", async (req, res) => {
     const info = req.body;
 
     console.log(info);
-    res.json(await getUserPost(info.user_id, info.type));
+    if (info.type === 0) {
+      res.json(await getUserPost(info.user_id, info.type));
+    } else {
+      res.json(await getParentPost(info.user_id, info.type));
+    }
   } catch (e) {
     console.log(e);
   } finally {
