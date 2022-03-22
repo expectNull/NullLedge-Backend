@@ -6,8 +6,8 @@ const getUserId = require("../getUserId");
 async function setComment(info) {
   // var ProId = await getProblemId(info.parent_post_id);
   var ProId = 0;
-  var sql = `INSERT INTO POST_TB(PROBLEM_ID, USER_ID, TYPE_GB, POST_YMD, CONTENT, PARENT_POST_ID) 
-  VALUES(?, ?, ?, ?, ?, ?);`;
+  var sql = `INSERT INTO POST_TB(PROBLEM_ID, USER_ID, TYPE_GB, POST_YMD, CONTENT, PARENT_POST_ID, CHECK_GB) 
+  VALUES(?, ?, ?, ?, ?, ?, ?);`;
   info.user_id = await getUserId(info.user_token);
   let params = [
     ProId,
@@ -16,6 +16,7 @@ async function setComment(info) {
     new Date().toISOString().split(".")[0],
     info.comment,
     info.parent_post_id,
+    2,
   ];
 
   let connection = await pool.getConnection(async conn => conn);
