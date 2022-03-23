@@ -10,6 +10,7 @@ const updateNoticeRouter = require("./Router/updateNotice/updateNoticeRouter");
 
 const checkLikeRouter = require("./Router/checkLike/checkLikeRouter");
 const checkCookieRouter = require("./Router/checkCookie/checkCookieRouter");
+const checkUserRouter = require("./Router/checkUser/checkUserRouter");
 
 const getLandingPostRouter = require("./Router/getLandingPost/getLandingPostRouter");
 const getAskRouter = require("./Router/getAsk/getAskRouter");
@@ -59,6 +60,7 @@ app.use("/updateNotice", updateNoticeRouter);
 
 app.use("/checkLike", checkLikeRouter);
 app.use("/checkCookie", checkCookieRouter);
+app.use("/checkUser", checkUserRouter);
 
 app.use("/getAsk", getAskRouter);
 app.use("/getCommentItem", getCommentItemRouter);
