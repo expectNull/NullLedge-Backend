@@ -1,6 +1,6 @@
 var express = require("express");
 var router = express.Router();
-const { getNotice, getUserPost } = require("./getNotice");
+const { getUserPost } = require("./getNotice");
 
 router.post("/", async (req, res) => {
   try {
