@@ -53,14 +53,15 @@ async function getUserPost(user) {
   }
   connection.release();
 
-  return getNotice(ret);
+  return await getNotice(ret);
 }
 
 async function getNotice(post) {
   let ret = [];
+  let cnt = 0;
 
   for (let i = 0; i < post.length; i++) {
-    var sql = `SELECT POST_ID, USER_NICK_NM, POST_YMD, CONTENT, TYPE_GB
+    var sql = `SELECT POST_ID, USER_NICK_NM, POST_YMD, CONTENT, TYPE_GB, CHECK_GB
   from POST_TB join USER_TB on POST_TB.USER_ID = USER_TB.USER_ID
   where PARENT_POST_ID = ? and (CHECK_GB != 0 and CHECK_GB != -1);`;
     let params = post[i].user_post_id;
@@ -69,10 +70,14 @@ async function getNotice(post) {
     let [rows, col] = await connection.query(sql, params);
 
     if (rows.length > 0) ret.push(await getItem(post[i], rows[0]));
+    if (rows.length > 0 && rows[0].CHECK_GB == 2) cnt++;
     connection.release();
   }
 
-  return ret;
+  return {
+    length: cnt,
+    content: ret,
+  };
 }
 
 module.exports = { getUserPost };
