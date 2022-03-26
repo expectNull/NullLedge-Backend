@@ -21,6 +21,7 @@ const getReplysRouter = require("./Router/getReplys/getReplysRouter");
 const getPostTagRouter = require("./Router/getPostTag/getPostTagRouter");
 const getTagPageRouter = require("./Router/getTagPage/getTagPageRouter");
 const getLoginRouter = require("./Router/getLogIn/getLoginRegister");
+const getUserAuthRouter = require("./Router/getUserAuth/getUserAuthRouter");
 const getUserInfoRouter = require("./Router/getUserInfo/getUserInfoRouter");
 const getUserPostRouter = require("./Router/getUserPost/getUserPostRouter");
 const getNoticeRouter = require("./Router/getNotice/getNoticeRouter");
@@ -45,7 +46,7 @@ app.use(
   cors({
     // origin: "https://whyrano.site",
     origin: [
-      "https://localhost:3000",
+      "http://localhost:3000",
       "https://whyrano.site",
       "https://tadfafsaest.whyrano.site",
     ],
@@ -72,6 +73,7 @@ app.use("/getPostTag", getPostTagRouter);
 app.use("/getTagPage", getTagPageRouter);
 app.use("/getLogin", getLoginRouter);
 app.use("/getUser", getUserInfoRouter);
+app.use("/getUserAuth", getUserAuthRouter);
 app.use("/getUserPost", getUserPostRouter);
 app.use("/getNotice", getNoticeRouter);
 
