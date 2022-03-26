@@ -7,7 +7,6 @@ router.post("/", async (req, res) => {
     console.log("------getUserAuthRouter---start--");
     const info = req.body;
 
-    console.log(info);
     res.json(await getUserAuth(info.token));
   } catch (e) {
     console.log(e);
