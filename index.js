@@ -48,6 +48,7 @@ app.use(
     // origin: "https://whyrano.site",
     origin: [
       "http://localhost:3000",
+      "https://localhost:3000",
       "https://whyrano.site",
       "https://tadfafsaest.whyrano.site",
     ],
