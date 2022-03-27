@@ -48,7 +48,7 @@ app.use(
   cors({
     // origin: "https://whyrano.site",
     origin: [
-      "httpㄴ://localhost:3000",
+      "http://localhost:3000",
       "https://whyrano.site",
       "https://tadfafsaest.whyrano.site",
     ],

@@ -28,6 +28,7 @@ async function getItem(post, item) {
     ymd: item.POST_YMD,
     user_nm: item.USER_NICK_NM,
     content: item.CONTENT,
+    check_gb: item.CHECK_GB,
   };
 
   return ret;
