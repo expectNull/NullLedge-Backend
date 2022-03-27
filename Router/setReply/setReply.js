@@ -1,7 +1,7 @@
 const pool = require("../../database/database");
 const getProblemId = require("./getProblemId");
-const getUserId = require("../getUserId");
-// setComment와 동일한 함수.
+const { getUserId } = require("../getUserId");
+
 async function setReply(info) {
   var ProId = await getProblemId(info.parent_post_id);
   info.html_content = info.html_content.replace(/"/gi, '\\"');

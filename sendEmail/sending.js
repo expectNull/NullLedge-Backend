@@ -1,5 +1,6 @@
 const nodemailer = require("nodemailer");
 const dotenv = require("dotenv");
+const { logger } = require("../Log/DefLogger");
 
 dotenv.config();
 const transporter = nodemailer.createTransport({
@@ -26,9 +27,11 @@ async function send(receiverEmail, title, htmls) {
 
   try {
     await transporter.sendMail(message);
-    console.log("메일을 성공적으로 발송했습니다.");
+    logger.info(`${receiverEmail}에게 ${title} 메일을 발송했습니다.`);
   } catch (e) {
-    console.log(e);
+    logger.error(
+      `${receiverEmail}에게 ${title}메일을 발송하는 도중 ${e}가 발생하였습니다.`,
+    );
   }
 }
 
