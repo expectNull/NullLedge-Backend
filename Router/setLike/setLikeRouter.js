@@ -2,21 +2,23 @@ var express = require("express");
 var router = express.Router();
 const pool = require("../../database/database");
 const updateLike = require("./updateLike");
+const { logger } = require("../../Log/DefLogger");
 
 router.post("/", async (req, res) => {
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+
   try {
-    console.log("------setLike---start--");
     const info = req.body;
-    console.log(info);
+    logger.info(`------setLike---start-- : ${ip}\n ${JSON.stringify(info)}`);
 
     let connection = await pool.getConnection(async conn => conn);
     updateLike(info.post_id, info.user_id, info.value);
     connection.release();
   } catch (e) {
-    console.log(e);
+    logger.error(`------setLike---error-- : ${ip}\n ${e}`);
   } finally {
     res.end();
-    console.log("------setLike--end--\n");
+    logger.info(`------setLike---end-- : ${ip}\n`);
     return;
   }
 });

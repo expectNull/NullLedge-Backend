@@ -1,19 +1,23 @@
 var express = require("express");
 var router = express.Router();
 const getReplys = require("./getReplys");
+const { logger } = require("../../Log/DefLogger");
 
 router.post("/", async (req, res) => {
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+
   try {
-    console.log("------getReplyRouter---start--");
     const info = req.body;
-    console.log(info);
+    logger.info(
+      `------getReplyRouter---start-- : ${ip}\n ${JSON.stringify(info)}`,
+    );
 
     res.json(await getReplys(info.post_id));
   } catch (e) {
-    console.log(e);
+    logger.error(`------getReplyRouter---error-- : ${ip}\n ${e}`);
   } finally {
     res.end();
-    console.log("------getReplyRouter--end--\n");
+    logger.info(`------getReplyRouter---end-- : ${ip}\n`);
     return;
   }
 });

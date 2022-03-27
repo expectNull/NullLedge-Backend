@@ -1,16 +1,21 @@
 var express = require("express");
 var router = express.Router();
+const { logger } = require("../../Log/DefLogger");
 
 router.post("/", async (req, res) => {
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
   try {
-    console.log("------checkCookie---start--");
     const info = req.cookies;
+
+    logger.info(
+      `------checkCookie---start-- : ${ip} \n ${JSON.stringify(info)}`,
+    );
     res.json({ _KEN: info._KEN });
   } catch (e) {
-    console.log(e);
+    logger.error(`------checkCookie---error-- : ${ip} \n${e}`);
   } finally {
     res.end();
-    console.log("------checkCookie--end--\n");
+    logger.info(`------checkCookie--end-- : ${ip} \n`);
     return;
   }
 });

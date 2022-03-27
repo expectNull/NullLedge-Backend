@@ -1,20 +1,25 @@
 var express = require("express");
 var router = express.Router();
 const getLandingPost = require("./getLandingPost");
+const { logger } = require("../../Log/DefLogger");
 
 router.post("/", async (req, res) => {
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+
   try {
-    const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
-    console.log("------getPostRouter---start--");
-    console.log(ip);
+    const info = req.body;
+    logger.info(
+      `------getLandingPostRouter---start-- : ${ip}\n ${JSON.stringify(info)}`,
+    );
+    console.log(info);
 
     const ret = await getLandingPost();
     res.json(ret);
   } catch (e) {
-    console.log(e);
+    logger.error(`------getLandingPostRouter---error-- : ${ip}\n ${e}`);
   } finally {
     res.end();
-    console.log("------getPostRouter--end--");
+    logger.info(`------getLandingPostRouter---end-- : ${ip}\n`);
     return;
   }
 });

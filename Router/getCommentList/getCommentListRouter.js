@@ -1,19 +1,23 @@
 var express = require("express");
 var router = express.Router();
 const getCommentList = require("./getCommentList");
+const { logger } = require("../../Log/DefLogger");
 
 router.post("/", async (req, res) => {
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+
   try {
-    console.log("------getCommentListRouter---start--");
     const info = req.body;
-    console.log(info);
+    logger.info(
+      `------getCommentListRouter---start-- : ${ip}\n ${JSON.stringify(info)}`,
+    );
 
     res.json(await getCommentList(info.post_id));
   } catch (e) {
-    console.log(e);
+    logger.info(`------getCommentListRouter---error-- : ${ip}\n ${e}`);
   } finally {
     res.end();
-    console.log("------getCommentListRouter--end--\n");
+    logger.info(`------getCommentListRouter---end-- : ${ip}\n`);
     return;
   }
 });

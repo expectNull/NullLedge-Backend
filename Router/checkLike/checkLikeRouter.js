@@ -1,19 +1,21 @@
 var express = require("express");
 var router = express.Router();
 const checkLike = require("./checkLike");
+const { logger } = require("../../Log/DefLogger");
 
 router.post("/", async (req, res) => {
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
   try {
-    console.log("------checkLike---start--");
     const info = req.body;
-    console.log(info);
+
+    logger.info(`------checkLike---start-- : ${ip} \n ${JSON.stringify(info)}`);
 
     res.json(await checkLike(info.post_id, info.user_id));
   } catch (e) {
-    console.log(e);
+    logger.error(`------checkLike---start-- : ${ip} \n ${e}`);
   } finally {
     res.end();
-    console.log("------checkLike--end--\n");
+    logger.info(`------checkLike---end-- : ${ip} \n`);
     return;
   }
 });

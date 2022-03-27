@@ -3,15 +3,18 @@ var router = express.Router();
 const checkEmail = require("./checkEmail");
 const checkNm = require("./checkNm");
 const setRegister = require("./setRegister");
+const { logger } = require("../../Log/DefLogger");
 
 router.post("/", async (req, res) => {
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+
   try {
-    console.log("------setRegister---start--");
     const info = req.body;
+    logger.info(`------setRegister---start-- : ${ip}\n ${info}`);
 
     // Email 중복 여부 판단
     if (await checkEmail(info.email)) {
-      console.log("-----sameEmail---------exist---\n");
+      logger.info(`------setRegister---sameEmail-- : ${ip}`);
       res.json({ error: "email" });
       res.end();
       return;
@@ -19,7 +22,7 @@ router.post("/", async (req, res) => {
 
     // 이미 이름이 존재하는 지 확인.
     if (await checkNm(info.nm)) {
-      console.log("-----sameNm---------exist---\n");
+      logger.info(`------setRegister---sameNm-- : ${ip}`);
       res.json({ error: "닉네임" });
       res.end();
       return;
@@ -28,10 +31,10 @@ router.post("/", async (req, res) => {
     await setRegister(info);
     res.json({ success: 1 });
   } catch (e) {
-    console.log(e);
+    logger.error(`------setRegister---error-- : ${ip}\n ${e}`);
   } finally {
     res.end();
-    console.log("------setRegister--end--\n");
+    logger.info(`------setRegister---end-- : ${ip}\n`);
     return;
   }
 });

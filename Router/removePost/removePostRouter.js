@@ -1,19 +1,21 @@
 var express = require("express");
 var router = express.Router();
 const removePost = require("./removePost");
+const { logger } = require("../../Log/DefLogger");
 
 router.post("/", async (req, res) => {
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+
   try {
-    console.log("------removePost---start--");
     const info = req.body;
-    console.log(info);
+    logger.info(`------removePost---start-- : ${ip}\n ${JSON.stringify(info)}`);
 
     await removePost(info.post_id);
   } catch (e) {
-    console.log(e);
+    logger.error(`------removePost---error-- : ${ip}\n ${e}`);
   } finally {
     res.end();
-    console.log("------removePost--end--\n");
+    logger.info(`------removePost---end-- : ${ip}\n`);
     return;
   }
 });
