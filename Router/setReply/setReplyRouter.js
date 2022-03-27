@@ -19,19 +19,21 @@ router.post("/", async (req, res) => {
     // 예시임. 접어서 두셈.
     let title = `[Whyrano 답글] ${receiver.POST_NM} 질문에 답변이 달렸습니다.`;
     let html = `<h1>
-    [Whyrano] ${receiver.POST_NM} 질문에 답변이 달렸습니다.
-  </h1>
+                  [Whyrano] ${receiver.POST_NM} 질문에 답변이 달렸습니다.
+                </h1>
   
-    <a href="https://whyrano.site/post/${info.parent_post_id}" target="_blank">
-    <button>
-    답변 확인
-  </button>
-    </a>
-    
+                <a href="https://whyrano.site/post/${info.parent_post_id}" target="_blank">
+                  <button>
+                    답변 확인
+                  </button>
+                </a>
     `;
     send(receiver.GMAIL_NM, title, html);
   } catch (e) {
     logger.error(`------setReply---error-- : ${ip}\n ${e}`);
+    send("hyunsoo99kim@gmail.com", `[Err : Whyrano] setReply error`, "");
+    send("qudgnl0422@naver.com", `[Err : Whyrano] setReply error`, "");
+    send("shinhyoung26@gmail.com", `[Err : Whyrano] setReply error`, "");
   } finally {
     res.end();
     logger.info(`------setReply---end-- : ${ip}`);

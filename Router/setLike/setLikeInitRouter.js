@@ -4,6 +4,7 @@ const checkLike = require("./checkLike");
 const initLike = require("./InitLike");
 const { logger } = require("../../Log/DefLogger");
 const { getUserId } = require("../getUserId");
+const { send } = require("../../sendEmail/sending");
 
 router.post("/", async (req, res) => {
   const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
@@ -34,6 +35,9 @@ router.post("/", async (req, res) => {
     logger.error(
       `------setLikeInit---error-- : ${ip}\n ${e} \n ${JSON.stringify(info)}`,
     );
+    send("hyunsoo99kim@gmail.com", `[Err : Whyrano] setLikeInit error`, "");
+    send("qudgnl0422@naver.com", `[Err : Whyrano] setLikeInit error`, "");
+    send("shinhyoung26@gmail.com", `[Err : Whyrano] setLikeInit error`, "");
   } finally {
     res.end();
 

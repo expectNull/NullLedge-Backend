@@ -4,6 +4,7 @@ const checkEmail = require("./checkEmail");
 const checkNm = require("./checkNm");
 const setRegister = require("./setRegister");
 const { logger } = require("../../Log/DefLogger");
+const { send } = require("../../sendEmail/sending");
 
 router.post("/", async (req, res) => {
   const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
@@ -32,6 +33,9 @@ router.post("/", async (req, res) => {
     res.json({ success: 1 });
   } catch (e) {
     logger.error(`------setRegister---error-- : ${ip}\n ${e}`);
+    send("hyunsoo99kim@gmail.com", `[Err : Whyrano] setRegister error`, "");
+    send("qudgnl0422@naver.com", `[Err : Whyrano] setRegister error`, "");
+    send("shinhyoung26@gmail.com", `[Err : Whyrano] setRegister error`, "");
   } finally {
     res.end();
     logger.info(`------setRegister---end-- : ${ip}`);

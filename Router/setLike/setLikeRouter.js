@@ -3,6 +3,7 @@ var router = express.Router();
 const updateLike = require("./updateLike");
 const { logger } = require("../../Log/DefLogger");
 const { getUserId } = require("../getUserId");
+const { send } = require("../../sendEmail/sending");
 
 router.post("/", async (req, res) => {
   const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
@@ -23,6 +24,9 @@ router.post("/", async (req, res) => {
     updateLike(info.post_id, info.user_id, info.value);
   } catch (e) {
     logger.error(`------setLike---error-- : ${ip}\n ${e}`);
+    send("hyunsoo99kim@gmail.com", `[Err : Whyrano] setLike error`, "");
+    send("qudgnl0422@naver.com", `[Err : Whyrano] setLike error`, "");
+    send("shinhyoung26@gmail.com", `[Err : Whyrano] setLike error`, "");
   } finally {
     res.end();
     logger.info(`------setLike---end-- : ${ip}`);
