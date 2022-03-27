@@ -9,6 +9,8 @@
 
 # testing
 /coverage
+/Log/error
+/Log/info
 
 # production
 /build
