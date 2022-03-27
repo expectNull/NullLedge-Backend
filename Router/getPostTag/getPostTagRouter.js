@@ -8,14 +8,14 @@ router.post("/", async (req, res) => {
 
   try {
     const info = req.body;
-    logger.info(`------getPostTag---start-- : ${ip}\n ${JSON.stringify(info)}`);
+    logger.info(`------getPostTag---start-- : ${ip}`);
 
     res.json(await getPostTag(info.post_id));
   } catch (e) {
     logger.error(`------getPostTag---error-- : ${ip}\n ${e}`);
   } finally {
     res.end();
-    logger.info(`------getPostTag---end-- : ${ip}\n`);
+    logger.info(`------getPostTag---end-- : ${ip}`);
     return;
   }
 });

@@ -8,9 +8,7 @@ router.post("/", async (req, res) => {
 
   try {
     const info = req.body;
-    logger.info(
-      `------getAskRouter---start-- : ${ip} \n ${JSON.stringify(info)}`,
-    );
+    logger.info(`------getAskRouter---start-- : ${ip}`);
 
     const ret = await getAsk(info.post_id);
     res.json(ret);
@@ -18,7 +16,7 @@ router.post("/", async (req, res) => {
     logger.error(`------getAskRouter---error-- : ${ip} \n ${e}`);
   } finally {
     res.end();
-    logger.info(`------getAskRouter---end-- : ${ip} \n`);
+    logger.info(`------getAskRouter---end-- : ${ip}`);
     return;
   }
 });

@@ -14,7 +14,7 @@ router.post("/", async (req, res) => {
     logger.error(`------getRanking---error-- : ${ip}\n ${e}`);
   } finally {
     res.end();
-    logger.info(`------getRanking---end-- : ${ip}\n`);
+    logger.info(`------getRanking---end-- : ${ip}`);
     return;
   }
 });

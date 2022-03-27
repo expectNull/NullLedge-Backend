@@ -8,9 +8,7 @@ router.post("/", async (req, res) => {
 
   try {
     const info = req.body;
-    logger.info(
-      `------getUserInfoRouter---start-- : ${ip}\n ${JSON.stringify(info)}`,
-    );
+    logger.info(`------getUserInfoRouter---start-- : ${ip}`);
 
     if (info.user === undefined) {
       // mypage로 들어옴 TOK로 정보 확인.
@@ -22,7 +20,7 @@ router.post("/", async (req, res) => {
     logger.error(`------getUserInfoRouter---error-- : ${ip}\n ${e}`);
   } finally {
     res.end();
-    logger.info(`------getUserInfoRouter---end-- : ${ip}\n`);
+    logger.info(`------getUserInfoRouter---end-- : ${ip}`);
     return;
   }
 });

@@ -8,7 +8,7 @@ router.post("/", async (req, res) => {
 
   try {
     const info = req.body;
-    logger.info(`------getLike---start-- : ${ip}\n ${JSON.stringify(info)}`);
+    logger.info(`------getLike---start-- : ${ip}`);
 
     res.json(await getLike(info.post_id));
   } catch (e) {
@@ -16,7 +16,7 @@ router.post("/", async (req, res) => {
     logger.error(`------getLike---error-- : ${ip}\n ${e}`);
   } finally {
     res.end();
-    logger.info(`------getLike---end-- : ${ip}\n`);
+    logger.info(`------getLike---end-- : ${ip}`);
     return;
   }
 });

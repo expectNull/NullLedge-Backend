@@ -11,9 +11,7 @@ router.post("/", async (req, res) => {
 
   try {
     const info = req.body;
-    logger.info(
-      `------setPostRouter---start-- : ${ip}\n ${JSON.stringify(info)}`,
-    );
+    logger.info(`------setPostRouter---start-- : ${ip}`);
 
     // token == salt_mail로 ID 가져오기.
     info.user_token = req.cookies["_KEN"];
@@ -27,7 +25,7 @@ router.post("/", async (req, res) => {
     logger.error(`------setPostRouter---error-- : ${ip}\n ${e}`);
   } finally {
     res.end();
-    logger.info(`------removeCookie---end-- : ${ip}\n`);
+    logger.info(`------removeCookie---end-- : ${ip}`);
     return;
   }
 });

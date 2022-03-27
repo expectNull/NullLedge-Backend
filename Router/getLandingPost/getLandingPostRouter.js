@@ -8,10 +8,7 @@ router.post("/", async (req, res) => {
 
   try {
     const info = req.body;
-    logger.info(
-      `------getLandingPostRouter---start-- : ${ip}\n ${JSON.stringify(info)}`,
-    );
-    console.log(info);
+    logger.info(`------getLandingPostRouter---start-- : ${ip}`);
 
     const ret = await getLandingPost();
     res.json(ret);
@@ -19,7 +16,7 @@ router.post("/", async (req, res) => {
     logger.error(`------getLandingPostRouter---error-- : ${ip}\n ${e}`);
   } finally {
     res.end();
-    logger.info(`------getLandingPostRouter---end-- : ${ip}\n`);
+    logger.info(`------getLandingPostRouter---end-- : ${ip}`);
     return;
   }
 });

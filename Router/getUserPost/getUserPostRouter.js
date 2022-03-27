@@ -9,11 +9,7 @@ router.post("/", async (req, res) => {
 
   try {
     const info = req.body;
-    logger.info(
-      `------getUserAsk, ReplyRouter---start-- : ${ip}\n ${JSON.stringify(
-        info,
-      )}`,
-    );
+    logger.info(`------getUserAsk, ReplyRouter---start-- : ${ip}`);
 
     if (info.type === 0) {
       res.json(await getUserPost(info.user_id, info.type));
@@ -24,7 +20,7 @@ router.post("/", async (req, res) => {
     logger.error(`------getUserAsk, ReplyRouter---error-- : ${ip}\n ${e}`);
   } finally {
     res.end();
-    logger.info(`------getUserAsk, ReplyRouter---end-- : ${ip}\n`);
+    logger.info(`------getUserAsk, ReplyRouter---end-- : ${ip}`);
     return;
   }
 });

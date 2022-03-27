@@ -8,16 +8,14 @@ router.post("/", async (req, res) => {
 
   try {
     const info = req.body;
-    logger.info(
-      `------updateNotice---start-- : ${ip}\n ${JSON.stringify(info)}`,
-    );
+    logger.info(`------updateNotice---start-- : ${ip}`);
 
     await updateNotice(info.post_id);
   } catch (e) {
     logger.error(`------updateNotice---error-- : ${ip}\n ${e}`);
   } finally {
     res.end();
-    logger.info(`------updateNotice---end-- : ${ip}\n`);
+    logger.info(`------updateNotice---end-- : ${ip}`);
     return;
   }
 });

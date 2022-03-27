@@ -9,7 +9,7 @@ router.post("/", async (req, res) => {
 
   try {
     const info = req.body;
-    logger.info(`------getLogin---start-- : ${ip}\n ${JSON.stringify(info)}`);
+    logger.info(`------getLogin---start-- : ${ip}`);
 
     // 동일한 email에 대해서 salt, hashedPw 가져오기.
     // bcrypt를 통해 동일하게 hash했을 떄를 비교.
@@ -17,7 +17,7 @@ router.post("/", async (req, res) => {
 
     if (ret.length === 0) {
       // 회원가입 하지 않은 유저인 경우
-      logger.info(`------getLogin---userDoesn't Exist-- : ${ip}\n`);
+      logger.info(`------getLogin---userDoesn't Exist-- : ${ip}`);
       res.json({
         error: `유저가 존재하지 않습니다.\nemail형식을 확인해 주세요.`,
       });
@@ -46,7 +46,7 @@ router.post("/", async (req, res) => {
       res.json({ success: 1 });
     } else {
       // 존재하지 않는 유저 혹은 비밀번호 틀림.
-      logger.info(`------getLogin---Wrong password-- : ${ip}\n`);
+      logger.info(`------getLogin---Wrong password-- : ${ip}`);
       res.json({
         error: `유저가 존재하지 않습니다.\n 비밀번호를 확인해주세요.`,
       });
@@ -55,7 +55,7 @@ router.post("/", async (req, res) => {
     logger.info(`------getLogin---error-- : ${ip}\n ${e}`);
   } finally {
     res.end();
-    logger.info(`------getLogin---end-- : ${ip}\n`);
+    logger.info(`------getLogin---end-- : ${ip}`);
     return;
   }
 });

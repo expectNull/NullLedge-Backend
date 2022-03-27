@@ -7,15 +7,13 @@ router.post("/", async (req, res) => {
   try {
     const info = req.cookies;
 
-    logger.info(
-      `------checkCookie---start-- : ${ip} \n ${JSON.stringify(info)}`,
-    );
+    logger.info(`------checkCookie---start-- : ${ip}}`);
     res.json({ _KEN: info._KEN });
   } catch (e) {
     logger.error(`------checkCookie---error-- : ${ip} \n${e}`);
   } finally {
     res.end();
-    logger.info(`------checkCookie--end-- : ${ip} \n`);
+    logger.info(`------checkCookie--end-- : ${ip}`);
     return;
   }
 });

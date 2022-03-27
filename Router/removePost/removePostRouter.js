@@ -8,14 +8,14 @@ router.post("/", async (req, res) => {
 
   try {
     const info = req.body;
-    logger.info(`------removePost---start-- : ${ip}\n ${JSON.stringify(info)}`);
+    logger.info(`------removePost---start-- : ${ip}`);
 
     await removePost(info.post_id);
   } catch (e) {
     logger.error(`------removePost---error-- : ${ip}\n ${e}`);
   } finally {
     res.end();
-    logger.info(`------removePost---end-- : ${ip}\n`);
+    logger.info(`------removePost---end-- : ${ip}`);
     return;
   }
 });

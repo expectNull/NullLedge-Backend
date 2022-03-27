@@ -8,16 +8,14 @@ router.post("/", async (req, res) => {
 
   try {
     const info = req.body;
-    logger.info(
-      `------getReplyRouter---start-- : ${ip}\n ${JSON.stringify(info)}`,
-    );
+    logger.info(`------getReplyRouter---start-- : ${ip}`);
 
     res.json(await getReplys(info.post_id));
   } catch (e) {
     logger.error(`------getReplyRouter---error-- : ${ip}\n ${e}`);
   } finally {
     res.end();
-    logger.info(`------getReplyRouter---end-- : ${ip}\n`);
+    logger.info(`------getReplyRouter---end-- : ${ip}`);
     return;
   }
 });

@@ -8,9 +8,7 @@ router.post("/", async (req, res) => {
 
   try {
     const info = req.body;
-    logger.info(
-      `------getUserAuthRouter---start-- : ${ip}\n ${JSON.stringify(info)}`,
-    );
+    logger.info(`------getUserAuthRouter---start-- : ${ip}`);
 
     if (info.token === undefined) {
       res.json(0);
@@ -23,7 +21,7 @@ router.post("/", async (req, res) => {
     logger.error(`------getUserAuthRouter---error-- : ${ip}\n ${e}`);
   } finally {
     res.end();
-    logger.info(`------getUserAuthRouter---end-- : ${ip}\n`);
+    logger.info(`------getUserAuthRouter---end-- : ${ip}`);
     return;
   }
 });

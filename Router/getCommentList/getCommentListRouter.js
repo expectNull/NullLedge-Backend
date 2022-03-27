@@ -8,16 +8,14 @@ router.post("/", async (req, res) => {
 
   try {
     const info = req.body;
-    logger.info(
-      `------getCommentListRouter---start-- : ${ip}\n ${JSON.stringify(info)}`,
-    );
+    logger.info(`------getCommentListRouter---start-- : ${ip}`);
 
     res.json(await getCommentList(info.post_id));
   } catch (e) {
     logger.info(`------getCommentListRouter---error-- : ${ip}\n ${e}`);
   } finally {
     res.end();
-    logger.info(`------getCommentListRouter---end-- : ${ip}\n`);
+    logger.info(`------getCommentListRouter---end-- : ${ip}`);
     return;
   }
 });

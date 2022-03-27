@@ -8,14 +8,14 @@ router.post("/", async (req, res) => {
 
   try {
     const info = req.body;
-    logger.info(`------checkUser---start-- : ${ip}\n ${JSON.stringify(info)}`);
+    logger.info(`------checkUser---start-- : ${ip}`);
 
     res.json({ _KEN: await checkUser(info.post_id) });
   } catch (e) {
     logger.error(`------checkUser---error-- : ${ip}\n ${e}`);
   } finally {
     res.end();
-    logger.info(`------checkUser---end-- : ${ip} \n`);
+    logger.info(`------checkUser---end-- : ${ip}`);
     return;
   }
 });

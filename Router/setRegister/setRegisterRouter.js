@@ -10,7 +10,7 @@ router.post("/", async (req, res) => {
 
   try {
     const info = req.body;
-    logger.info(`------setRegister---start-- : ${ip}\n ${info}`);
+    logger.info(`------setRegister---start-- : ${ip}`);
 
     // Email 중복 여부 판단
     if (await checkEmail(info.email)) {
@@ -34,7 +34,7 @@ router.post("/", async (req, res) => {
     logger.error(`------setRegister---error-- : ${ip}\n ${e}`);
   } finally {
     res.end();
-    logger.info(`------setRegister---end-- : ${ip}\n`);
+    logger.info(`------setRegister---end-- : ${ip}`);
     return;
   }
 });

@@ -7,6 +7,7 @@ const cookieParser = require("cookie-parser");
 const indexRouter = require("./Router/indexRouter");
 
 const updateNoticeRouter = require("./Router/updateNotice/updateNoticeRouter");
+const updateViewRouter = require("./Router/updateView/updateViewRouter");
 
 const checkLikeRouter = require("./Router/checkLike/checkLikeRouter");
 const checkCookieRouter = require("./Router/checkCookie/checkCookieRouter");
@@ -47,8 +48,7 @@ app.use(
   cors({
     // origin: "https://whyrano.site",
     origin: [
-      "http://localhost:3000",
-      "https://localhost:3000",
+      "httpㄴ://localhost:3000",
       "https://whyrano.site",
       "https://tadfafsaest.whyrano.site",
     ],
@@ -60,6 +60,7 @@ app.use(bodyParser.json());
 app.use(indexRouter);
 
 app.use("/updateNotice", updateNoticeRouter);
+app.use("/updateView", updateViewRouter);
 
 app.use("/checkLike", checkLikeRouter);
 app.use("/checkCookie", checkCookieRouter);

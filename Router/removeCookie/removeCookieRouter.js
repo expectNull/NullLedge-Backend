@@ -12,7 +12,7 @@ router.post("/", async (req, res) => {
     logger.error(`------removeCookie---error-- : ${ip}\n ${e}`);
   } finally {
     res.end();
-    logger.info(`------removeCookie---end-- : ${ip}\n`);
+    logger.info(`------removeCookie---end-- : ${ip}`);
     return;
   }
 });

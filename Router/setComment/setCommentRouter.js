@@ -8,14 +8,14 @@ router.post("/", async (req, res) => {
 
   try {
     const info = req.body;
-    logger.info(`------setComment---start-- : ${ip}\n ${JSON.stringify(info)}`);
+    logger.info(`------setComment---start-- : ${ip}`);
 
     res.send(await setComment(info));
   } catch (e) {
     logger.error(`------setComment---error-- : ${ip}\n ${e}`);
   } finally {
     res.end();
-    logger.info(`------setComment---end-- : ${ip}\n`);
+    logger.info(`------setComment---end-- : ${ip}`);
     return;
   }
 });

@@ -10,7 +10,7 @@ router.post("/", async (req, res) => {
 
   try {
     const info = req.body.TAG_NM;
-    logger.info(`------getTagPage---start-- : ${ip}\n ${JSON.stringify(info)}`);
+    logger.info(`------getTagPage---start-- : ${ip}`);
 
     if (!info) {
       res.json(await getAllTag());
@@ -23,7 +23,7 @@ router.post("/", async (req, res) => {
     logger.error(`------getTagPage---error-- : ${ip}\n ${e}`);
   } finally {
     res.end();
-    logger.info(`------getTagPage---end-- : ${ip}\n`);
+    logger.info(`------getTagPage---end-- : ${ip}`);
     return;
   }
 });
