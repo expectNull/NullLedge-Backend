@@ -22,7 +22,7 @@ router.post("/", async (req, res) => {
     [Whyrano] ${receiver.POST_NM} 질문에 답변이 달렸습니다.
   </h1>
   
-    <a href="https://whyrano.site/post/7" target="_blank">
+    <a href="https://whyrano.site/post/${info.parent_post_id}" target="_blank">
     <button>
     답변 확인
   </button>
