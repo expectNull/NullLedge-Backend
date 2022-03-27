@@ -2,23 +2,29 @@ var express = require("express");
 var router = express.Router();
 const getUserPost = require("./getUserPost");
 const getParentPost = require("./getParentPost");
+const { logger } = require("../../Log/DefLogger");
 
 router.post("/", async (req, res) => {
-  try {
-    console.log("------getUserAsk, ReplyRouter---start--");
-    const info = req.body;
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
 
-    console.log(info);
+  try {
+    const info = req.body;
+    logger.info(
+      `------getUserAsk, ReplyRouter---start-- : ${ip}\n ${JSON.stringify(
+        info,
+      )}`,
+    );
+
     if (info.type === 0) {
       res.json(await getUserPost(info.user_id, info.type));
     } else {
       res.json(await getParentPost(info.user_id, info.type));
     }
   } catch (e) {
-    console.log(e);
+    logger.error(`------getUserAsk, ReplyRouter---error-- : ${ip}\n ${e}`);
   } finally {
     res.end();
-    console.log("------getUserAsk, ReplyRouter--end--\n");
+    logger.info(`------getUserAsk, ReplyRouter---end-- : ${ip}\n`);
     return;
   }
 });

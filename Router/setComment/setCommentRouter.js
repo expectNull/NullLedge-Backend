@@ -1,19 +1,21 @@
 var express = require("express");
 var router = express.Router();
 const setComment = require("../setComment/setComment");
+const { logger } = require("../../Log/DefLogger");
 
 router.post("/", async (req, res) => {
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+
   try {
-    console.log("------setComment---start--");
     const info = req.body;
-    console.log(info);
+    logger.info(`------setComment---start-- : ${ip}\n ${JSON.stringify(info)}`);
 
     res.send(await setComment(info));
   } catch (e) {
-    console.log(e);
+    logger.error(`------setComment---error-- : ${ip}\n ${e}`);
   } finally {
     res.end();
-    console.log("------setComment--end--\n");
+    logger.info(`------setComment---end-- : ${ip}\n`);
     return;
   }
 });

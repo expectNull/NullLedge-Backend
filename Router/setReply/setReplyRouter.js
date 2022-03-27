@@ -1,20 +1,22 @@
 var express = require("express");
 var router = express.Router();
 const setReply = require("../setReply/setReply");
+const { logger } = require("../../Log/DefLogger");
 
 router.post("/", async (req, res) => {
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+
   try {
-    console.log("------setReply---start--");
     const info = req.body;
+    logger.info(`------setReply---start-- : ${ip}\n ${JSON.stringify(info)}`);
     info.user_token = req.cookies["_KEN"];
-    console.log(info);
 
     res.send(await setReply(info));
   } catch (e) {
-    console.log(e);
+    logger.error(`------setReply---error-- : ${ip}\n ${e}`);
   } finally {
     res.end();
-    console.log("------setReply--end--\n");
+    logger.info(`------setReply---end-- : ${ip}\n`);
     return;
   }
 });

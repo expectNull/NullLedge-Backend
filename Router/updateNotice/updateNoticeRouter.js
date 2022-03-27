@@ -1,19 +1,23 @@
 var express = require("express");
 var router = express.Router();
 const updateNotice = require("./updateNotice");
+const { logger } = require("../../Log/DefLogger");
 
 router.post("/", async (req, res) => {
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+
   try {
-    console.log("------updateNotice---start--");
     const info = req.body;
-    console.log(info);
+    logger.info(
+      `------updateNotice---start-- : ${ip}\n ${JSON.stringify(info)}`,
+    );
 
     await updateNotice(info.post_id);
   } catch (e) {
-    console.log(e);
+    logger.error(`------updateNotice---error-- : ${ip}\n ${e}`);
   } finally {
     res.end();
-    console.log("------updateNotice--end--\n");
+    logger.info(`------updateNotice---end-- : ${ip}\n`);
     return;
   }
 });

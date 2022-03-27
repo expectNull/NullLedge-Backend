@@ -3,16 +3,20 @@ var router = express.Router();
 const pool = require("../../database/database");
 const checkLike = require("./checkLike");
 const initLike = require("./InitLike");
+const { logger } = require("../../Log/DefLogger");
 
 router.post("/", async (req, res) => {
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+
   try {
-    console.log("------setLikeInit---start--");
     const info = req.body;
-    console.log(info);
+    logger.info(
+      `------setLikeInit---start-- : ${ip}\n ${JSON.stringify(info)}`,
+    );
 
     // 이미 Like Log가 존재하는 지 확인.
     if (await checkLike(info.post_id, info.user_id)) {
-      console.log("-----LikeLog---------exist---\n");
+      logger.info(`------setLikeInit---LikeExist-- : ${ip}\n`);
       res.end();
       return;
     }
@@ -23,11 +27,11 @@ router.post("/", async (req, res) => {
     // 새로운 Like Log 만들기.
     initLike(info.post_id, info.user_id);
   } catch (e) {
-    console.log(e);
+    logger.error(`------setLikeInit---error-- : ${ip}\n ${e}`);
   } finally {
     res.end();
 
-    console.log("------setLikeInit--end--\n");
+    logger.info(`------setLikeInit---end-- : ${ip}\n`);
     return;
   }
 });

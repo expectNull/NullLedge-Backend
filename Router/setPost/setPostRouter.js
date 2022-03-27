@@ -3,15 +3,20 @@ var router = express.Router();
 const setPost = require("./setPost");
 const setTag = require("./setTag");
 const getPostId = require("./getPostId");
-const getUserId = require("../getUserId");
+const { getUserId } = require("../getUserId");
+const { logger } = require("../../Log/DefLogger");
 
 router.post("/", async (req, res) => {
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+
   try {
-    console.log("------setPostRouter---start--");
     const info = req.body;
+    logger.info(
+      `------setPostRouter---start-- : ${ip}\n ${JSON.stringify(info)}`,
+    );
+
     // token == salt_mail로 ID 가져오기.
     info.user_token = req.cookies["_KEN"];
-    console.log(info);
     info.user_id = await getUserId(info.user_token);
 
     await setPost(info);
@@ -19,10 +24,10 @@ router.post("/", async (req, res) => {
     await setTag(info.tags, post);
   } catch (e) {
     res.send(e);
-    console.log(e);
+    logger.error(`------setPostRouter---error-- : ${ip}\n ${e}`);
   } finally {
     res.end();
-    console.log("------setPostRouter--end--");
+    logger.info(`------removeCookie---end-- : ${ip}\n`);
     return;
   }
 });

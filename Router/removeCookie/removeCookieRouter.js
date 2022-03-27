@@ -1,15 +1,18 @@
 var express = require("express");
 var router = express.Router();
+const { logger } = require("../../Log/DefLogger");
 
 router.post("/", async (req, res) => {
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+
   try {
-    console.log("------removeCookie---start--");
+    logger.info(`------removeCookie---start-- : ${ip}`);
     res.clearCookie("_KEN");
   } catch (e) {
-    console.log(e);
+    logger.error(`------removeCookie---error-- : ${ip}\n ${e}`);
   } finally {
     res.end();
-    console.log("------removeCookie--end--\n");
+    logger.info(`------removeCookie---end-- : ${ip}\n`);
     return;
   }
 });
