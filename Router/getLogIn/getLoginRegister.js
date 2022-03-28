@@ -40,7 +40,7 @@ router.post("/", async (req, res) => {
       // 웹 서버에서만 접근할 수 있도록 쿠키에 플래그를 지정하는 httpOnly 옵션을 추가했습니다.
       // 이것도 bcrypt로 암호화 해서 쿠키로 만들까???
       res.cookie("_KEN", salt_mail, {
-        expires: new Date(Date.now() + 900000),
+        expires: new Date(Date.now() + 3600000),
         httpOnly: true,
         encode: String,
       });
