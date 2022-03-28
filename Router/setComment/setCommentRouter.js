@@ -10,7 +10,6 @@ router.post("/", async (req, res) => {
   try {
     const info = req.body;
     logger.info(`------setComment---start-- : ${ip}`);
-
     res.send(await setComment(info));
   } catch (e) {
     logger.error(`------setComment---error-- : ${ip}\n ${e}`);
