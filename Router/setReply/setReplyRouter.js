@@ -1,6 +1,7 @@
 var express = require("express");
 var router = express.Router();
 const setReply = require("../setReply/setReply");
+const checkReply = require("./checkReply");
 const { logger } = require("../../Log/DefLogger");
 const getInfoEmail = require("../getInfoEmail");
 const send = require("../../sendEmail/sending");
@@ -13,6 +14,13 @@ router.post("/", async (req, res) => {
     logger.info(`------setReply---start-- : ${ip}`);
     info.user_token = req.cookies["_KEN"];
 
+    console.log(await checkReply(info));
+    if (await checkReply(info)) {
+      logger.info(`------setReply---exist Reply-- : ${ip}`);
+      res.json({ err: "이미 답변이 존재합니다." });
+      res.end();
+      return;
+    }
     res.send(await setReply(info));
 
     let receiver = await getInfoEmail(info.parent_post_id);

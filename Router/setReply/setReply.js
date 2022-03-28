@@ -12,7 +12,6 @@ async function setReply(info) {
     ProId,
     info.user_id,
     info.type_gb,
-    // new Date().toISOString().split(".")[0],
     info.html_content,
     info.parent_post_id,
     2,

@@ -11,7 +11,6 @@ async function setComment(info) {
     ProId,
     info.user_id,
     info.type_gb,
-    // new Date().toISOString().split(".")[0],
     info.comment,
     info.parent_post_id,
     2,
