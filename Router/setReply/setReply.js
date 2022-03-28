@@ -14,7 +14,7 @@ async function setReply(info) {
     info.type_gb,
     info.html_content,
     info.parent_post_id,
-    1,
+    2,
   ];
 
   let connection = await pool.getConnection(async conn => conn);
