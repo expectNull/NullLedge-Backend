@@ -4,6 +4,7 @@ const timeConvert = require("../timeConverter");
 
 async function getItem(item, id) {
   let ret = {
+    post_id: id,
     post_nm: item.POST_NM,
     post_ymd: timeConvert(item.POST_YMD),
     content: item.CONTENT,
