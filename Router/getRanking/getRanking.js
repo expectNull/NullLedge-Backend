@@ -15,8 +15,10 @@ async function getItem(item) {
 async function getRanking() {
   var sql1 = `SET @ROWNUM := 0;`;
   var sql2 = `
-  SELECT (@ROWNUM := @ROWNUM + 1) as RANKING, USER_ID, USER_NICK_NM, NULLPOINT_AMT, STATUS_CONTENT, 
-	(select count(*) from POST_TB where user_id = USER_TB.user_id and type_gb = 0) as QUESTION,
+  SELECT (@ROWNUM := @ROWNUM + 1) as RANKING, USER_ID, USER_NICK_NM, 
+  ((select count(*) from POST_TB where user_id = USER_TB.user_id and type_gb = 0) * 2) + ((select count(*) from POST_TB where user_id = USER_TB.user_id and type_gb = 1) * 5) as NULLPOINT_AMT, 
+  STATUS_CONTENT, 
+  (select count(*) from POST_TB where user_id = USER_TB.user_id and type_gb = 0) as QUESTION,
   (select count(*) from POST_TB where user_id = USER_TB.user_id and type_gb = 1) as ANSWER
 	FROM NULLLEDGE.USER_TB
   order by NULLPOINT_AMT DESC;`;
