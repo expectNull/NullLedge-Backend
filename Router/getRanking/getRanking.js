@@ -15,11 +15,12 @@ async function getItem(item) {
 async function getRanking() {
   var sql1 = `SET @ROWNUM := 0;`;
   var sql2 = `
-  SELECT (@ROWNUM := @ROWNUM + 1) as RANKING, USER_ID, USER_NICK_NM, 
-  ((select count(*) from POST_TB where user_id = USER_TB.user_id and type_gb = 0) * 2) + ((select count(*) from POST_TB where user_id = USER_TB.user_id and type_gb = 1) * 5) as NULLPOINT_AMT, 
-  STATUS_CONTENT, 
+  UPDATE USER_TB SET NULLPOINT_AMT = ((select count(*) from POST_TB where user_id = USER_TB.user_id and type_gb = 0) * 2) + ((select count(*) from POST_TB where user_id = USER_TB.user_id and type_gb = 1) * 5) where USER_TB.USER_ID;`;
+  var sql3 = `
+  SELECT USER_ID, USER_NICK_NM, NULLPOINT_AMT, STATUS_CONTENT, 
   (select count(*) from POST_TB where user_id = USER_TB.user_id and type_gb = 0) as QUESTION,
-  (select count(*) from POST_TB where user_id = USER_TB.user_id and type_gb = 1) as ANSWER
+  (select count(*) from POST_TB where user_id = USER_TB.user_id and type_gb = 1) as ANSWER,
+  (@ROWNUM := @ROWNUM + 1) as RANKING
 	FROM NULLLEDGE.USER_TB
   order by NULLPOINT_AMT DESC;`;
 
@@ -27,7 +28,8 @@ async function getRanking() {
 
   let connection = await pool.getConnection(async conn => conn);
   await connection.query(sql1);
-  let [rows, col] = await connection.query(sql2);
+  await connection.query(sql2);
+  let [rows, col] = await connection.query(sql3);
 
   for (let i = 0; i < rows.length; i++) {
     ret.push(getItem(rows[i]));
