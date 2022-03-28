@@ -29,3 +29,5 @@ yarn-error.log*
 db_config.json
 
 .env
+
+nohup.out
