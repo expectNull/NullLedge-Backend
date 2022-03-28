@@ -5,7 +5,7 @@ const { getUserId } = require("../getUserId");
 async function setComment(info) {
   var ProId = 0;
   var sql = `INSERT INTO POST_TB(PROBLEM_ID, USER_ID, TYPE_GB, CONTENT, PARENT_POST_ID, CHECK_GB) 
-  VALUES(?, ?, ?, ?, ?, ?, ?);`;
+  VALUES(?, ?, ?, ?, ?, ?);`;
   info.user_id = await getUserId(info.user_token);
   let params = [
     ProId,

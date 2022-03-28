@@ -1,7 +1,7 @@
 const pool = require("../../database/database");
 
 async function updateView(post) {
-  var sql = `update post_tb 
+  var sql = `update POST_TB 
   set VIEW_CNT = VIEW_CNT + 1 
   where POST_ID = ?;`;
   let params = post;
