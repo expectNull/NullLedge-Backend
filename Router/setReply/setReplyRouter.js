@@ -14,7 +14,6 @@ router.post("/", async (req, res) => {
     logger.info(`------setReply---start-- : ${ip}`);
     info.user_token = req.cookies["_KEN"];
 
-    console.log(await checkReply(info));
     if (await checkReply(info)) {
       logger.info(`------setReply---exist Reply-- : ${ip}`);
       res.json({ err: "이미 답변이 존재합니다." });
