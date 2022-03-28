@@ -13,6 +13,8 @@ router.post("/", async (req, res) => {
     logger.info(`------removePost---start-- : ${ip}`);
 
     let compare_cookie = await checkUser(info.post_id);
+
+    // check the user's cookie is same with post.
     if (compare_cookie !== req.cookies._KEN) {
       logger.error(`------removePost---injection-- : ${ip}\n ${e}`);
       send(
@@ -30,11 +32,13 @@ router.post("/", async (req, res) => {
         `[Err : Whyrano] removePost injection try`,
         "",
       );
+      res.json({ err: "다른 user 입니다." });
       res.end();
       return;
     }
 
     await removePost(info.post_id);
+    res.json({ success: 1 });
   } catch (e) {
     logger.error(`------removePost---error-- : ${ip}\n ${e}`);
     send("hyunsoo99kim@gmail.com", `[Err : Whyrano] removePost error`, "");
