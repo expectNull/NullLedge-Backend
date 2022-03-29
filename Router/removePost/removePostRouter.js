@@ -4,6 +4,7 @@ const removePost = require("./removePost");
 const { logger } = require("../../Log/DefLogger");
 const { send } = require("../../sendEmail/sending");
 const checkUser = require("../checkUser/checkUser");
+const { getUserAuth } = require("../getUserAuth/getUserAuth");
 
 router.post("/", async (req, res) => {
   const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
@@ -13,9 +14,12 @@ router.post("/", async (req, res) => {
     logger.info(`------removePost---start-- : ${ip}`);
 
     let compare_cookie = await checkUser(info.post_id);
+    let user_auth = await getUserAuth(req.cookies._KEN);
 
+    if (user_auth > 0) {
+    }
     // check the user's cookie is same with post.
-    if (compare_cookie !== req.cookies._KEN) {
+    else if (compare_cookie !== req.cookies._KEN) {
       logger.error(`------removePost---injection-- : ${ip}\n ${e}`);
       send(
         "hyunsoo99kim@gmail.com",
