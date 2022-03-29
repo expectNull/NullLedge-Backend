@@ -21,6 +21,7 @@ router.post("/", async (req, res) => {
       return;
     }
     res.send(await setReply(info));
+    res.json({ success: 1 });
 
     let receiver = await getInfoEmail(info.parent_post_id);
     // 예시임. 접어서 두셈.
