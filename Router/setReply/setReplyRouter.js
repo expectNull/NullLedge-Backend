@@ -20,7 +20,7 @@ router.post("/", async (req, res) => {
       res.end();
       return;
     }
-    res.send(await setReply(info));
+    await setReply(info);
     res.json({ success: 1 });
 
     let receiver = await getInfoEmail(info.parent_post_id);
