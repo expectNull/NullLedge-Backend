@@ -15,7 +15,7 @@ async function getUserNm(user) {
   var sql = `
   select USER_ID, USER_NICK_NM, NULLPOINT_AMT, SIGNUP_YMD, STATUS_CONTENT
   from USER_TB
-  where USER_NICK_NM = ?;`;
+  where USER_ID = ?;`;
   let params = user;
 
   let connection = await pool.getConnection(async conn => conn);
