@@ -1,17 +1,5 @@
 const pool = require("../../database/database");
 
-async function getItem(item) {
-  let ret = {
-    user_ranking: item.RANKING,
-    user_nm: item.USER_NICK_NM,
-    user_state: item.NULLPOINT_AMT,
-    user_point: item.STATUS_CONTENT,
-    user_reply: item.ANSWER,
-    user_ask: item.QUESTION,
-  };
-  return ret;
-}
-
 async function getRanking() {
   var sql1 = `SET @ROWNUM := 0;`;
   var sql2 = `
@@ -31,11 +19,6 @@ async function getRanking() {
   await connection.query(sql2);
   let [rows, col] = await connection.query(sql3);
 
-  for (let i = 0; i < rows.length; i++) {
-    ret.push(getItem(rows[i]));
-  }
-
-  console.log(ret);
   connection.release();
 
   return rows;
