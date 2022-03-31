@@ -11,6 +11,10 @@ async function checkPost(post_id) {
 
   connection.release();
 
+  if (rows[0].TYPE_GB >= 1) {
+    return 0;
+  }
+
   return rows.length;
 }
 
