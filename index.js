@@ -1,4 +1,5 @@
-const app = require("express")();
+const express = require("express");
+const app = express();
 const bodyParser = require("body-parser");
 
 const cors = require("cors");
@@ -28,6 +29,7 @@ const getUserInfoRouter = require("./Router/getUserInfo/getUserInfoRouter");
 const getUserPostRouter = require("./Router/getUserPost/getUserPostRouter");
 const getNoticeRouter = require("./Router/getNotice/getNoticeRouter");
 
+const setImgRouter = require("./Router/setImg/setImgRouter");
 const setRegisterRouter = require("./Router/setRegister/setRegisterRouter");
 const setPostRouter = require("./Router/setPost/setPostRouter");
 const setLikeRouter = require("./Router/setLike/setLikeRouter");
@@ -41,6 +43,7 @@ const removePostRouter = require("./Router/removePost/removePostRouter");
 // middleware 순서 이슈??
 // https://stackoverflow.com/questions/16209145/how-can-i-set-cookie-in-node-js-using-express-framework
 app.use(cookieParser());
+app.use("/img", express.static("img"));
 
 // https://kosaf04pyh.tistory.com/152
 // origin 설정 필요한가봄.
@@ -81,6 +84,7 @@ app.use("/getUserAuth", getUserAuthRouter);
 app.use("/getUserPost", getUserPostRouter);
 app.use("/getNotice", getNoticeRouter);
 
+app.use("/setImg", setImgRouter);
 app.use("/setRegister", setRegisterRouter);
 app.use("/setReply", setReplyRouter);
 app.use("/setpost", setPostRouter);
