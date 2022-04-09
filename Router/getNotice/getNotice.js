@@ -38,7 +38,8 @@ async function getUserPost(user) {
   var sql = `
   SELECT POST_ID, POST_NM, PARENT_POST_ID
   from POST_TB join USER_TB on POST_TB.USER_ID = USER_TB.USER_ID
-  where SALT_MAIL_NM = ?;`;
+  where SALT_MAIL_NM = ?
+  ORDER BY POST_YMD DESC;`;
   let params = [user];
   let ret = [];
 
@@ -63,17 +64,26 @@ async function getNotice(post) {
 
   for (let i = 0; i < post.length; i++) {
     var sql = `SELECT POST_ID, USER_NICK_NM, POST_YMD, CONTENT, TYPE_GB, CHECK_GB
-  from POST_TB join USER_TB on POST_TB.USER_ID = USER_TB.USER_ID
-  where PARENT_POST_ID = ? and (CHECK_GB != 0 and CHECK_GB != -1);`;
-    let params = post[i].user_post_id;
+    from POST_TB join USER_TB on POST_TB.USER_ID = USER_TB.USER_ID
+    where PARENT_POST_ID = ? and (CHECK_GB != 0 and CHECK_GB != -1)
+    ORDER BY POST_YMD DESC;`;
+    let params = [post[i].user_post_id];
 
     let connection = await pool.getConnection(async conn => conn);
     let [rows, col] = await connection.query(sql, params);
 
-    if (rows.length > 0) ret.push(await getItem(post[i], rows[0]));
-    if (rows.length > 0 && rows[0].CHECK_GB == 2) cnt++;
+    if (rows.length > 0) {
+      for (let idx = 0; idx < rows.length; idx++) {
+        ret.push(await getItem(post[i], rows[idx]));
+        if (rows[idx].CHECK_GB == 2) cnt++;
+      }
+    }
     connection.release();
   }
+
+  ret.sort((a, b) => {
+    a.key - b.key;
+  });
 
   return {
     length: cnt,

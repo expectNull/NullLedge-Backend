@@ -3,7 +3,6 @@ var router = express.Router();
 const multer = require("multer");
 const fs = require("fs");
 
-const setImg = require("./setImg");
 const { getUserId } = require("../getUserId");
 const { logger } = require("../../Log/DefLogger");
 const { send } = require("../../sendEmail/sending");
