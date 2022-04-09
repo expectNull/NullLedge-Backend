@@ -29,6 +29,12 @@ router.post("/", async (req, res) => {
 
     let receiver = await getPerson(first_tag, info.user_id);
     console.log(receiver);
+    if (receiver === undefined) {
+      res.end();
+      logger.info(`------setPostRouter---no candidate-- : ${ip}`);
+      return;
+    }
+
     let title = `[Whyrano 요청] ${info.title} 질문에 답변요청이 있습니다.`;
     let html = `<h1>
                   [Whyrano] ${info.title} 질문에 답변요청이 있습니다.
@@ -49,7 +55,7 @@ router.post("/", async (req, res) => {
     send("shinhyoung26@gmail.com", `[Err : Whyrano] setPostRouter error`, "");
   } finally {
     res.end();
-    logger.info(`------removeCookie---end-- : ${ip}`);
+    logger.info(`------setPostRouter---end-- : ${ip}`);
     return;
   }
 });
