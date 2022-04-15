@@ -20,6 +20,8 @@ async function setRegister(user) {
   await connection.query(sql, params);
 
   connection.release();
+
+  return params[1];
 }
 
 module.exports = setRegister;

@@ -3,8 +3,10 @@ var router = express.Router();
 const checkEmail = require("./checkEmail");
 const checkNm = require("./checkNm");
 const setRegister = require("./setRegister");
+const setTag = require("./setTag");
 const { logger } = require("../../Log/DefLogger");
 const { send } = require("../../sendEmail/sending");
+const { getUserId } = require("../getUserId");
 
 router.post("/", async (req, res) => {
   const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
@@ -29,7 +31,11 @@ router.post("/", async (req, res) => {
       return;
     }
 
-    await setRegister(info);
+    let ret = await setRegister(info);
+    let id = await getUserId(ret);
+
+    await setTag(info.tags, id);
+
     res.json({ success: 1 });
   } catch (e) {
     logger.error(`------setRegister---error-- : ${ip}\n ${e}`);
