@@ -22,7 +22,8 @@ async function getUserPost(user, type) {
   var sql = `
   SELECT POST_ID, POST_NM, POST_YMD, VIEW_CNT, USER_NICK_NM, CONTENT
   from POST_TB join USER_TB on POST_TB.USER_ID = USER_TB.USER_ID
-  where type_gb = ? and USER_TB.user_id = ?;`;
+  where type_gb = ? and USER_TB.user_id = ?
+  ORDER BY POST_YMD DESC;`;
   let params = [type, user];
   let ret = [];
 

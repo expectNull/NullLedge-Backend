@@ -24,7 +24,8 @@ async function getParentPost(user, type) {
   var sql = `
   SELECT PARENT_POST_ID
   from POST_TB join USER_TB on POST_TB.USER_ID = USER_TB.USER_ID
-  where type_gb = ? and USER_TB.user_id = ?;`;
+  where type_gb = ? and USER_TB.user_id = ?
+  ORDER BY POST_YMD DESC;`;
   let params = [type, user];
 
   let connection = await pool.getConnection(async conn => conn);
