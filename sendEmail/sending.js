@@ -3,21 +3,21 @@ const dotenv = require("dotenv");
 const { logger } = require("../Log/DefLogger");
 
 dotenv.config();
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  host: "smtp.google.com",
-  port: 587,
-  secure: true,
-  auth: {
-    type: "OAuth2",
-    user: process.env.OAUTH_USER,
-    clientId: process.env.OAUTH_CLIENT_ID,
-    clientSecret: process.env.OAUTH_CLIENT_SECRET,
-    refreshToken: process.env.OAUTH_REFRESH_TOKEN,
-  },
-});
-
 async function send(receiverEmail, title, htmls) {
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    host: "smtp.google.com",
+    port: 587,
+    secure: true,
+    auth: {
+      type: "OAuth2",
+      user: process.env.OAUTH_USER,
+      clientId: process.env.OAUTH_CLIENT_ID,
+      clientSecret: process.env.OAUTH_CLIENT_SECRET,
+      refreshToken: process.env.OAUTH_REFRESH_TOKEN,
+    },
+  });
+
   const message = {
     from: process.env.OAUTH_USER,
     to: receiverEmail,
