@@ -8,6 +8,7 @@ async function getItem(item) {
 
   let ret = {
     post_id: post_id,
+    user_id: item.USER_ID,
     ans_cnt: await getAnswer(post_id),
     like_cnt: await getLike(post_id),
     view_cnt: item.VIEW_CNT,
@@ -21,7 +22,7 @@ async function getItem(item) {
 
 async function getPost() {
   // type_gb = 0으로 질문글 확인, order by를 통해 최신글 부터
-  var sql = `select POST_ID, POST_NM, POST_YMD, VIEW_CNT, USER_NICK_NM, CONTENT
+  var sql = `select USER_TB.USER_ID, POST_ID, POST_NM, POST_YMD, VIEW_CNT, USER_NICK_NM, CONTENT
     from POST_TB join USER_TB on POST_TB.USER_ID = USER_TB.USER_ID
     where type_gb = 0
     order by POST_YMD DESC;`;

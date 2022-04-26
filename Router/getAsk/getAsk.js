@@ -5,6 +5,7 @@ const timeConvert = require("../timeConverter");
 async function getItem(item, id) {
   let ret = {
     post_id: id,
+    user_id: item.USER_ID,
     post_nm: item.POST_NM,
     post_ymd: timeConvert(item.POST_YMD),
     content: item.CONTENT,
@@ -19,7 +20,7 @@ async function getItem(item, id) {
 }
 
 async function getAsk(id) {
-  var sql = `select POST_NM, POST_YMD, CONTENT, 
+  var sql = `select USER_TB.USER_ID, POST_NM, POST_YMD, CONTENT, 
   VIEW_CNT, USER_NICK_NM, NULLPOINT_AMT, STATUS_CONTENT
   from POST_TB join USER_TB on POST_TB.USER_ID = USER_TB.USER_ID
    where post_ID = ?;`;

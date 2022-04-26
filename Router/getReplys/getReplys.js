@@ -3,6 +3,7 @@ const pool = require("../../database/database");
 async function getItem(item) {
   let ret = {
     post_id: item.POST_ID,
+    user_id: item.USER_ID,
     content: item.CONTENT,
     user_nm: item.USER_NICK_NM,
     user_np: item.NULLPOINT_AMT,
@@ -14,7 +15,7 @@ async function getItem(item) {
 async function getReplys(parent_id) {
   // like 수?? 업로드 날짜 수??
   var sql = `
-  select POST_ID, CONTENT, USER_NICK_NM, NULLPOINT_AMT, STATUS_CONTENT
+  select USER_TB.USER_ID, POST_ID, CONTENT, USER_NICK_NM, NULLPOINT_AMT, STATUS_CONTENT
   from POST_TB join USER_TB on POST_TB.USER_ID = USER_TB.USER_ID
   where type_gb = 1 and parent_post_id = ?
   ORDER BY POST_YMD DESC;`;

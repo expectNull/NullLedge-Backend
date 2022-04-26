@@ -22,7 +22,6 @@ async function getUserNm(user) {
   let [rows, col] = await connection.query(sql, params);
 
   let ret = getItem(rows[0]);
-
   connection.release();
 
   return ret;
