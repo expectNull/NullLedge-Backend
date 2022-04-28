@@ -3,6 +3,7 @@ const pool = require("../../database/database");
 async function getAllTag() {
   var sql = `SELECT TAG_NM, COUNT(*) as CNT 
   FROM NULLLEDGE.TAG_TB 
+  where USER_ID = -1
   group by TAG_NM;`;
   let ret = [];
 
